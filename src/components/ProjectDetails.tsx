@@ -43,7 +43,7 @@ const projects = [
     title: "Ai controlled 2d Car Racing Game",
     description:"Trained an AI model to play a 2D car racing game using Reinforcement Learning. The model was trained using the Proximal Policy Optimization (PPO) algorithm and achieved a top-10 score on the game's leaderboard.",
     tech: ["Python", "Pygame", "NumPy","Gym","Stable Baseline3", "Reinforcement Learning"],
-    image:"comebacktothis",
+    image:"",
     demo:"https://example.com/demo-ai-car-racing",
     github:"hello"
   },

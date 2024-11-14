@@ -98,7 +98,7 @@ export default function Hero() {
         loop
         playsInline
       >
-        <source src="spacevid.mp4" type="video/mp4" />
+        <source src="/spacevid2.mp4" type="video/mp4" />
       </video>
 
       {/* Background gradient */}

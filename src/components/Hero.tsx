@@ -89,7 +89,18 @@ export default function Hero() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden bg-cover bg-center">
-      
+
+      {/* Background Video */}
+      <video
+        className="absolute inset-0 w-full h-full object-cover z-0"
+        autoPlay
+        muted
+        loop
+        playsInline
+      >
+        <source src="spacevid.mp4" type="video/mp4" />
+      </video>
+
       {/* Background gradient */}
       <motion.div
         className="absolute inset-0 bg-gradient-to-br from-gray-900/70 to-black/70"
@@ -103,7 +114,7 @@ export default function Hero() {
         <Card />
       </div>
 
-      <div className="relative w-full max-w-5xl md:ml-auto z-10 px-4 md:px-0"> {/* Added padding for mobile */}
+      <div className="relative w-full max-w-5xl md:ml-auto z-10 px-4 md:px-0">
         <motion.div className="animate-fade-in" initial="initial" animate="animate">
           {/* Name with bar under it */}
           <motion.h1

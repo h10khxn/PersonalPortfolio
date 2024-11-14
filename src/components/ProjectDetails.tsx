@@ -8,7 +8,8 @@ const projects = [
     description: "Led development of a system to automate test ordering, result processing, and billing for hospital labs. Built REST APIs using Spring Boot and designed a MySQL database to manage patients, tests, and billing.",
     tech: ["Java", "REST API", "MySQL", "HTML", "CSS", "JavaScript"],
     image: "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&q=80&w=800",
-    demo: "https://example.com/demo-hospital-lab"
+    demo: "https://example.com/demo-hospital-lab",
+    github:""
   },
   {
     id: 2,
@@ -16,7 +17,8 @@ const projects = [
     description: "Developed a robust mock airport management system in Java, simulating core functionalities such as flight tracking, aircraft status monitoring, and staff management.",
     tech: ["Java", "OOP"],
     image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&q=80&w=800",
-    demo: "https://example.com/demo-airport-system"
+    demo: "https://example.com/demo-airport-system",
+    github:""
   },
   {
     id: 3,
@@ -24,7 +26,8 @@ const projects = [
     description: "Utilized agile development methodologies to iterate development on a game, resulting in a 20% increase in player engagement and retention metrics.",
     tech: ["HTML", "CSS", "JavaScript", "JSON"],
     image: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&q=80&w=800",
-    demo: "https://example.com/demo-tower-defense"
+    demo: "https://example.com/demo-tower-defense",
+    github:""
   },
   {
     id: 4,
@@ -32,8 +35,18 @@ const projects = [
     description: "Developed a visually engaging and interactive Pokémon-themed to-do list application, resulting in a 40% increase in user engagement and retention.",
     tech: ["HTML", "CSS", "JavaScript", "UML"],
     image: "https://images.unsplash.com/photo-1542779283-429940ce8336?auto=format&fit=crop&q=80&w=800",
-    demo: "https://example.com/demo-pokemon-todo"
-  }
+    demo: "https://example.com/demo-pokemon-todo",
+    github:""
+  },
+  {
+    id:5,
+    title: "Ai controlled 2d Car Racing Game",
+    description:"Trained an AI model to play a 2D car racing game using Reinforcement Learning. The model was trained using the Proximal Policy Optimization (PPO) algorithm and achieved a top-10 score on the game's leaderboard.",
+    tech: ["Python", "Pygame", "NumPy","Gym","Stable Baseline3", "Reinforcement Learning"],
+    image:"comebacktothis",
+    demo:"https://example.com/demo-ai-car-racing",
+    github:"hello"
+  },
 ];
 
 export default function ProjectDetails() {

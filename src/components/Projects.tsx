@@ -55,7 +55,17 @@ const projects: Project[] = [
     demo: "https://example.com/demo-pokemon-todo",
     github: "https://github.com/example/pokemon-todo",
     date: "2022",
-  }
+  },
+  {
+    id:5,
+    title: "Ai controlled 2d Car Racing Game",
+    description:"Trained an AI model to play a 2D car racing game using Reinforcement Learning. The model was trained using the Proximal Policy Optimization (PPO) algorithm and achieved a top-10 score on the game's leaderboard.",
+    tech: ["Python", "Pygame", "NumPy","Gym","Stable Baseline3", "Reinforcement Learning"],
+    image:"comebacktothis",
+    demo:"https://example.com/demo-ai-car-racing",
+    github:"",
+    date:"2024"
+  },
 ];
 
 const Projects: React.FC = () => {

@@ -91,15 +91,10 @@ export default function Hero() {
     <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden bg-cover bg-center">
 
       {/* Background Video */}
-      <video
-        className="absolute inset-0 w-full h-full object-cover z-0"
-        autoPlay
-        muted
-        loop
-        playsInline
-      >
-        <source src="/spacevid2.mp4" type="video/mp4" />
-      </video>
+      <video className="absolute inset-0 w-full h-full object-cover z-0" autoPlay muted loop playsInline>
+  <source src="./spacevid2.mp4" type="video/mp4" />
+</video>
+
 
       {/* Background gradient */}
       <motion.div

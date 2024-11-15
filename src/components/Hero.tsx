@@ -92,8 +92,9 @@ export default function Hero() {
 
       {/* Background Video */}
       <video className="absolute inset-0 w-full h-full object-cover z-0" autoPlay muted loop playsInline>
-  <source src="./spacevid2.mp4" type="video/mp4" />
-</video>
+        <source src="/spacevid2.mp4" type="video/mp4" />
+      </video>
+
 
 
       {/* Background gradient */}

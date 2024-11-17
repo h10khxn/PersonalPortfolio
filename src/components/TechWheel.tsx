@@ -22,14 +22,21 @@ const technologies = [
   { name: 'SQL', Icon: Database },
   { name: 'C', Icon: Code2 },
   { name: 'C++', Icon: CircuitBoard },
-  
-
 ];
 
 export default function TechWheel() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const controls = useAnimation();
   const [isDragging, setIsDragging] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect if on mobile
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const startAutoScroll = () => {
     controls.start({
@@ -41,7 +48,7 @@ export default function TechWheel() {
       x: '-100%',
       transition: {
         repeat: Infinity,
-        duration: 15,
+        duration: isMobile ? 20 : 15, // Slower for mobile
         ease: 'linear',
       },
     });
@@ -49,7 +56,7 @@ export default function TechWheel() {
 
   useEffect(() => {
     startAutoScroll();
-  }, []);
+  }, [isMobile]);
 
   const handleDragStart = () => {
     setIsDragging(true);
@@ -78,6 +85,7 @@ export default function TechWheel() {
           dragConstraints={{ left: -2000, right: 0 }}
           onDragStart={handleDragStart}
           onDragEnd={handleDragEnd}
+          style={{ willChange: 'transform' }} // GPU-accelerated rendering
         >
           {Array(3).fill(technologies).flat().map((tech, index) => (
             <motion.div

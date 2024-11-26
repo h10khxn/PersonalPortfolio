@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { motion, useAnimation } from 'framer-motion';
+import { motion, useAnimation, PanInfo } from 'framer-motion'; // Import PanInfo
 import { 
   Code2, 
   FileCode, 
@@ -29,13 +29,25 @@ export default function TechWheel() {
   const controls = useAnimation();
   const [isDragging, setIsDragging] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [containerWidth, setContainerWidth] = useState(0);
 
-  // Detect if on mobile
+  // Detect if on mobile and set container width
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    const updateContainerWidth = () => {
+      if (scrollContainerRef.current) {
+        setContainerWidth(scrollContainerRef.current.offsetWidth);
+      }
+    };
     checkMobile();
+    updateContainerWidth();
+
     window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    window.addEventListener('resize', updateContainerWidth);
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+      window.removeEventListener('resize', updateContainerWidth);
+    };
   }, []);
 
   const startAutoScroll = () => {
@@ -48,24 +60,36 @@ export default function TechWheel() {
       x: '-100%',
       transition: {
         repeat: Infinity,
-        duration: isMobile ? 20 : 15, // Slower for mobile
+        duration: isMobile ? 20 : 15, // Adjusted speed for mobile
         ease: 'linear',
       },
     });
   };
 
   useEffect(() => {
-    startAutoScroll();
-  }, [isMobile]);
+    if (!isDragging) {
+      startAutoScroll();
+    }
+  }, [isDragging, isMobile]);
 
   const handleDragStart = () => {
     setIsDragging(true);
-    controls.stop();
+    controls.stop(); // Stop auto-scroll animation
   };
 
-  const handleDragEnd = () => {
+  const handleDragEnd = (_: any, info: PanInfo) => {
     setIsDragging(false);
-    startAutoScroll();
+
+    // Resume auto-scroll after drag, starting from the current position
+    const velocity = info.velocity.x; // Use velocity for smooth transition
+    controls.start({
+      x: velocity > 0 ? 0 : '-100%', // Adjust based on drag direction
+      transition: {
+        repeat: Infinity,
+        duration: Math.abs(velocity) > 50 ? 15 : 20, // Adjust duration based on velocity
+        ease: 'linear',
+      },
+    });
   };
 
   return (
@@ -73,7 +97,7 @@ export default function TechWheel() {
       <h2 className="text-center text-3xl font-bold text-white mb-8">
         TECHNOLOGIES
       </h2>
-      
+
       <div 
         className="max-w-7xl mx-auto overflow-hidden relative" 
         ref={scrollContainerRef}
@@ -82,7 +106,10 @@ export default function TechWheel() {
           className="flex gap-8"
           animate={controls}
           drag="x"
-          dragConstraints={{ left: -2000, right: 0 }}
+          dragConstraints={{
+            left: -containerWidth * 2, // Dynamic drag constraints
+            right: 0,
+          }}
           onDragStart={handleDragStart}
           onDragEnd={handleDragEnd}
           style={{ willChange: 'transform' }} // GPU-accelerated rendering

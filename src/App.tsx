@@ -7,7 +7,7 @@ import TechWheel from './components/TechWheel';
 import Header from './components/Header';
 import Certifications from './components/Certifications';
 import Footer from './components/Footer';
-import ProjectsAndDetails from './ProjectsAndDetails';
+import ProjectsAndDetails from './components/ProjectsAndDetails';
 import { Route, Routes } from 'react-router-dom';
 
 export default function App() {

@@ -4,45 +4,13 @@ import { motion } from "framer-motion";
 import { Github, Linkedin, Mail, Terminal, Repeat } from "lucide-react";
 import Card from "./Card"; // Ensure Card component path is correct
 
+
 // Utility function to combine class names
 function classNames(...classes: string[]): string {
   return classes.filter(Boolean).join(" ");
 }
 
-// Meteors Component
-interface MeteorsProps {
-  number?: number;
-}
-export const Meteors = ({ number = 20 }: MeteorsProps) => {
-  const [meteorStyles, setMeteorStyles] = useState<Array<React.CSSProperties>>([]);
 
-  useEffect(() => {
-    const styles = Array.from({ length: number }, () => ({
-      top: `${Math.floor(Math.random() * window.innerHeight)}px`,
-      left: `${Math.floor(Math.random() * window.innerWidth)}px`,
-      animationDelay: `${Math.random() * 1 + 0.2}s`,
-      animationDuration: `${Math.floor(Math.random() * 8 + 2)}s`,
-      pointerEvents: 'none' as React.CSSProperties['pointerEvents'],
-    }));
-    setMeteorStyles(styles);
-  }, [number]);
-
-  return (
-    <>
-      {meteorStyles.map((style, idx) => (
-        <span
-          key={idx}
-          className={classNames(
-            "pointer-events-none absolute size-0.75 rotate-[215deg] animate-meteor rounded-full bg-slate-500 shadow-[0_0_0_1px_#ffffff10]"
-          )}
-          style={style}
-        >
-          <div className="pointer-events-none absolute top-1/2 -z-10 h-px w-[50px] -translate-y-1/2 bg-gradient-to-r from-slate-500 to-transparent" />
-        </span>
-      ))}
-    </>
-  );
-};
 
 // Hero Component
 export default function Hero() {
@@ -92,6 +60,7 @@ export default function Hero() {
 
       {/* Background Video */}
       <video className="absolute inset-0 w-full h-full object-cover z-0" autoPlay muted loop playsInline>
+        <source src="/spacevid2.webm" type="video/webm" />
         <source src="/spacevid2.mp4" type="video/mp4" />
       </video>
 
@@ -222,10 +191,7 @@ export default function Hero() {
         <Terminal className="w-10 h-10 text-violet-500" />
       </motion.div>
 
-      {/* Meteors Component */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <Meteors number={75} />
-      </div>
+     
     </div>
   );
 }

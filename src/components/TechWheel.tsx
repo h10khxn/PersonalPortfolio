@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useMemo } from "react";
 import { motion, useAnimation } from "framer-motion";
 
 // Technology data with official SVG URLs
@@ -17,6 +17,11 @@ const technologies = [
 export default function TechWheel() {
   const scrollContainerRef = useRef(null);
   const controls = useAnimation();
+
+  // Memoize the extended array to avoid recalculating on each render
+  const extendedTechnologies = useMemo(() => {
+    return [...technologies, ...technologies]; // Doubling the array for the continuous scroll effect
+  }, []);
 
   // Auto-scroll functionality
   useEffect(() => {
@@ -52,28 +57,26 @@ export default function TechWheel() {
         <motion.div
           className="flex gap-8"
           animate={controls}
-          style={{ willChange: "transform" }}
+          style={{ willChange: "transform" }} // Limit the use of will-change to active elements
         >
-          {Array(2)
-            .fill(technologies)
-            .flat()
-            .map((tech, index) => (
-              <motion.div
-                key={index}
-                className="flex flex-col items-center gap-2 min-w-[120px] py-4"
-                whileHover={{ scale: 1.2 }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
-                <div className="w-20 h-20 flex items-center justify-center rounded-xl">
-                  <img
-                    src={tech.logo}
-                    alt={`${tech.name} logo`}
-                    className="w-16 h-16 object-contain" // Larger size for logos
-                  />
-                </div>
-                <span className="text-sm text-gray-400">{tech.name}</span>
-              </motion.div>
-            ))}
+          {extendedTechnologies.map((tech, index) => (
+            <motion.div
+              key={index}
+              className="flex flex-col items-center gap-2 min-w-[120px] py-4"
+              whileHover={{ scale: 1.2 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              <div className="w-20 h-20 flex items-center justify-center rounded-xl">
+                <img
+                  src={tech.logo}
+                  alt={`${tech.name} logo`}
+                  className="w-16 h-16 object-contain" // Larger size for logos
+                  loading="lazy" // Lazy loading images
+                />
+              </div>
+              <span className="text-sm text-gray-400">{tech.name}</span>
+            </motion.div>
+          ))}
         </motion.div>
       </div>
     </div>

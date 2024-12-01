@@ -62,53 +62,61 @@ export default function Skills() {
   };
 
   return (
-    <section className="py-20 bg-gradient-to-b from-black to-gray-900">
-      <div className="max-w-6xl mx-auto px-4">
-        <h2 className="text-4xl font-bold text-white mb-12 text-center">
-          Technical Skills
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {skills.map((skill, index) => {
-            const Icon = skill.icon;
-            const isActive = activeSkill === index;
+    <div>
+      {/* Top Section with gradient */}
+      <section className="py-20 bg-gradient-to-b from-black to-gray-900">
+        <div className="max-w-6xl mx-auto px-4">
+          <h2 className="text-4xl font-bold text-white mb-12 text-center">
+            Technical Skills
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {skills.map((skill, index) => {
+              const Icon = skill.icon;
+              const isActive = activeSkill === index;
 
-            return (
-              <motion.div
-                key={index}
-                className={`p-6 rounded-xl bg-gradient-to-r from-gray-800 to-gray-900 transition-all duration-300 shadow-md group ${
-                  isActive ? "from-violet-600 to-indigo-700 shadow-lg scale-105" : ""
-                } hover:from-violet-600 hover:to-indigo-700 hover:shadow-lg hover:scale-105`}
-                whileHover={{ scale: 1.05 }}
-                onTouchStart={() => handleTouchStart(index)}
-                onTouchEnd={handleTouchEnd}
-              >
-                <div className="flex items-center mb-4">
-                  <div
-                    className={`w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-purple-500 shadow-md transition-transform duration-200 ${
-                      isActive ? "scale-105" : ""
-                    } group-hover:scale-105`}
-                  >
-                    <Icon className="w-6 h-6 text-white" />
-                  </div>
-                  <h3 className="text-xl font-semibold text-white ml-4">
-                    {skill.category}
-                  </h3>
-                </div>
-                <div className="flex flex-wrap gap-2 mt-4">
-                  {skill.items.map((item, i) => (
-                    <span
-                      key={i}
-                      className="px-3 py-1 text-sm bg-white/10 text-gray-300 rounded-full hover:bg-gradient-to-r hover:from-violet-600 hover:to-purple-600 transition-all"
+              return (
+                <motion.div
+                  key={index}
+                  className={`p-6 rounded-xl bg-gradient-to-r from-gray-800 to-gray-900 transition-all duration-300 shadow-md group ${
+                    isActive ? "from-violet-600 to-indigo-700 shadow-lg scale-105" : ""
+                  } hover:from-violet-600 hover:to-indigo-700 hover:shadow-lg hover:scale-105`}
+                  whileHover={{ scale: 1.05 }}
+                  onTouchStart={() => handleTouchStart(index)}
+                  onTouchEnd={handleTouchEnd}
+                >
+                  <div className="flex items-center mb-4">
+                    <div
+                      className={`w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-purple-500 shadow-md transition-transform duration-200 ${
+                        isActive ? "scale-105" : ""
+                      } group-hover:scale-105`}
                     >
-                      {item}
-                    </span>
-                  ))}
-                </div>
-              </motion.div>
-            );
-          })}
+                      <Icon className="w-6 h-6 text-white" />
+                    </div>
+                    <h3 className="text-xl font-semibold text-white ml-4">
+                      {skill.category}
+                    </h3>
+                  </div>
+                  <div className="flex flex-wrap gap-2 mt-4">
+                    {skill.items.map((item, i) => (
+                      <span
+                        key={i}
+                        className="px-3 py-1 text-sm bg-white/10 text-gray-300 rounded-full hover:bg-gradient-to-r hover:from-violet-600 hover:to-purple-600 transition-all"
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      {/* Bottom Section with gradient */}
+      <section className="py-20 bg-gradient-to-t from-black to-gray-900">
+        {/* Content for the bottom section */}
+      </section>
+    </div>
   );
 }

@@ -5,6 +5,7 @@ import { Github, Linkedin, Mail, Terminal, Repeat } from "lucide-react";
 import Card from "./Card"; // Ensure Card component path is correct
 
 
+
 // Utility function to combine class names
 function classNames(...classes: string[]): string {
   return classes.filter(Boolean).join(" ");
@@ -141,9 +142,9 @@ export default function Hero() {
                 transition={{ duration: 1, delay: 0.2 }}
                 style={{ fontFamily: "'Noto Serif JP', serif" }}
               >
-                Hello there! Welcome to my portfolio. I'm a Third Year Software Engineering student
-                specializing in building (and occasionally designing) exceptional websites,
-                applications, and everything in between. Feel free to navigate through to learn more
+                Hello there! Welcome to my portfolio. I'm currently pursuing a degree in Software Engineering.   
+                I specialize in building and designing exceptional websites, automated tools,
+              applications, and everything in between. I am currently exploring the vast domain of Artifical Intelligence and Machine Learning! Feel free to navigate through to learn more
                 about my work.
               </motion.p>
 

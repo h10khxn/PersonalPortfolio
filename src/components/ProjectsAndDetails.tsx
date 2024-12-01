@@ -15,9 +15,9 @@ interface Project {
 const projects: Project[] = [
   {
     id: 1,
-    title: "Hospital Laboratory System",
+    title: "Hospital Laboratory Database System",
     description: "Led development of a system to automate test ordering, result processing, and billing for hospital labs.",
-    tech: ["Python","Flask", "REST API","Fetch API", "MySQL", "HTML", "CSS", "JavaScript"],
+    tech: ["PHP", "REST API","Fetch API", "MySQL", "HTML", "CSS", "JavaScript"],
     image: "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&q=80&w=800",
     date: "2024",
   },
@@ -222,7 +222,7 @@ export default function ProjectsAndDetails() {
   if (!project) {
     return (
       <motion.section
-        className="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-violet-900/20 via-gray-900 to-black py-20 px-4 relative overflow-hidden"
+        className="min-h-screen bg-black py-20 px-4"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}

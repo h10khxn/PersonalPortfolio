@@ -12,7 +12,7 @@ import { Route, Routes } from 'react-router-dom';
 
 export default function App() {
   return (
-    <div className="bg-gradient-to-br from-gray-900 to-black text-white min-h-screen">
+    <div className="min-h-screen text-white"> {/* Removed gradient classes */}
       {/* Header */}
       <Header />
 
@@ -20,24 +20,26 @@ export default function App() {
       <section id="home" className="pt-0">
         <Hero />
       </section>
-      
+
       <section id="technologies" className="py-0">
         <TechWheel />
       </section>
+
       <section id="projects" className="py-0">
-      <Routes>
-      <Route path="/" element={<ProjectsAndDetails />} />
-      <Route path="/project/:id" element={<ProjectsAndDetails />} />
-      </Routes>
+        <Routes>
+          <Route path="/" element={<ProjectsAndDetails />} />
+          <Route path="/project/:id" element={<ProjectsAndDetails />} />
+        </Routes>
       </section>
+
       <section id="skills" className="py-0">
         <Skills />
       </section>
-      
+
       <section id="certifications" className="py-0">
         <Certifications />
       </section>
-      
+
       <section id="contact" className="py-0">
         <Contact />
       </section>

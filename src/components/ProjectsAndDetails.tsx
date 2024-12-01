@@ -57,7 +57,7 @@ const projects: Project[] = [
     id: 6,
     title: "Weather App",
     description: "Developed a weather app that displays the current weather and forecast for any location around the world. Favorited cities displayed on main page.",
-    tech: ["React", "TypeScript", "Tanstack Query", " Tailwind CSS", "OpenWeatherMap Rest API"],
+    tech: ["React", "TypeScript", "Tanstack Query", "Tailwind CSS", "OpenWeatherMap Rest API"],
     image: '/SKYCAST.PNG',
     date: '2024'
   },
@@ -102,7 +102,7 @@ const ProjectCard = ({ project, index, currentIndex, totalProjects, onClick }: {
       }}
     >
       <motion.div
-        className="w-full aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer bg-gray-800/50 backdrop-blur-xl group"
+        className="w-full h-full rounded-2xl overflow-hidden cursor-pointer bg-gray-800/50 backdrop-blur-xl group"
         onClick={onClick}
         whileHover={isActive ? { scale: 1.02 } : {}}
       >
@@ -181,58 +181,54 @@ export default function ProjectsAndDetails() {
     if (id) {
       const selectedProject = projects.find((p) => p.id.toString() === id);
       setProject(selectedProject);
-      setAutoAdvance(false);  // Stop auto-advance when viewing specific project
+      setAutoAdvance(false);
     } else {
       setProject(undefined);
-      setAutoAdvance(true);  // Enable auto-advance when no specific project is selected
+      setAutoAdvance(true);
     }
   }, [id]);
 
-  // Auto-advance timer logic
   useEffect(() => {
     let timer: NodeJS.Timeout;
     if (autoAdvance && !project) {
       timer = setInterval(() => {
         setCurrentIndex((prev) => (prev + 1) % projects.length);
-      }, 5000);  // Adjusted to 5 seconds for a longer delay
+      }, 5000);
     }
-    return () => clearInterval(timer); // Cleanup the timer
+    return () => clearInterval(timer);
   }, [autoAdvance, project]);
 
-  // Handle manual navigation via arrow buttons
   const handleNavigation = (direction: 'next' | 'prev') => {
-    setAutoAdvance(false);  // Stop auto-advance
+    setAutoAdvance(false);
     const newIndex = direction === 'next'
       ? (currentIndex + 1) % projects.length
       : (currentIndex - 1 + projects.length) % projects.length;
     setCurrentIndex(newIndex);
   };
 
-  // Reset auto-advance after manual navigation
   useEffect(() => {
     if (!autoAdvance) {
       const timer = setTimeout(() => {
-        setAutoAdvance(true);  // Re-enable auto-advance after a delay
-      }, 3000);  // 3 seconds delay before resuming auto-advance
-
-      return () => clearTimeout(timer);  // Cleanup if the component re-renders
+        setAutoAdvance(true);
+      }, 3000);
+      return () => clearTimeout(timer);
     }
   }, [autoAdvance]);
 
   if (!project) {
     return (
       <motion.section
-        className="min-h-screen bg-black py-20 px-4"
+        className="h-screen overflow-hidden bg-black flex flex-col"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
       >
-        <div className="max-w-7xl mx-auto relative">
-          <motion.h2 className="text-5xl font-bold text-white mb-4 text-center">
+        <div className="flex-1 flex flex-col items-center justify-center px-4">
+          <motion.h2 className="text-5xl font-bold text-white mb-8 text-center">
             Featured Projects
           </motion.h2>
 
-          <div className="relative h-[600px]">
+          <div className="relative w-full h-[calc(100vh-12rem)] max-h-[600px]">
             <NavigationButton direction="left" onClick={() => handleNavigation('prev')} />
             <NavigationButton direction="right" onClick={() => handleNavigation('next')} />
 
@@ -258,12 +254,12 @@ export default function ProjectsAndDetails() {
 
   return (
     <motion.section 
-      className="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-violet-900/20 via-gray-900 to-black py-20 px-4"
+      className="h-screen overflow-y-auto bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-violet-900/20 via-gray-900 to-black"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-4xl mx-auto px-4 py-20">
         <motion.button
           onClick={() => navigate('/')}
           className="flex items-center gap-2 text-violet-300 mb-8 group"

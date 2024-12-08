@@ -6,22 +6,22 @@ const skills = [
   {
     category: "Frontend Development",
     icon: Layout,
-    items: ["HTML", "JavaScript", "TypeScript", "React.js", "Tailwind CSS"],
+    items: ["HTML", "JavaScript", "TypeScript", "React.js", "CSS"],
   },
   {
     category: "Backend Development",
     icon: Code2,
-    items: ["Java", "Python", "APIs"],
+    items: ["Java", "Python", " Restful API", "Fetch API","PHP"],
   },
   {
-    category: "Database",
+    category: "Database Systems",
     icon: Database,
     items: ["MySQL", "SQL"],
   },
   {
     category: "Cloud & DevOps",
     icon: Cloud,
-    items: ["CI/CD", "Docker"],
+    items: ["CI/CD", "Docker","Version Control (Git)"],
   },
   {
     category: "ML & Automation",
@@ -31,7 +31,6 @@ const skills = [
       "Deep Learning",
       "APIs and Automation",
       "Object-Oriented Programming",
-      "Version Control (Git)",
       "GUI Automation",
       "Web Scraping",],
   },
@@ -67,7 +66,7 @@ export default function Skills() {
       <section className="py-20 bg-gradient-to-b from-black to-gray-900">
         <div className="max-w-6xl mx-auto px-4">
           <h2 className="text-4xl font-bold text-white mb-12 text-center">
-            Technical Skills
+            What I Do
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {skills.map((skill, index) => {

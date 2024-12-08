@@ -33,7 +33,10 @@ export default function Contact() {
   return (
     <section className="py-20 bg-gradient-to-b from-black to-gray-900">
       <div className="max-w-4xl mx-auto px-4">
-        <h2 className="text-4xl font-bold text-white mb-12 text-center">Get In Touch</h2>
+        {/* Gradient Title */}
+        <h2 className="text-5xl font-bold text-center mb-12 animated-gradient-text">
+          And That's It! Thank you For Visiting My Portfolio. What's Next? Get In Touch
+        </h2>
 
         {/* Centered Success Notification */}
         {isSent && (

@@ -13,7 +13,7 @@ const certifications = [
     title: 'Harvard CS50x: Introduction to Computer Science',
     issuer: 'Harvard University via edX',
     date: 'Currently Enrolled',
-    description: 'A comprehensive introduction to computer science covering programming fundamentals, algorithms, data structures, and web development using languages like C, Python, SQL, and JavaScript.',
+    description: 'A comprehensive introduction to computer science covering programming fundamentals, algorithms, data structures, Aritificial intelligence, Deep learning and web development using languages like C, Python, SQL, and JavaScript.',
     url: 'https://pll.harvard.edu/course/cs50-introduction-computer-science'
   },
   {

@@ -1,14 +1,46 @@
-import React, { useState } from 'react';
-import { Send } from 'lucide-react';
-import emailjs from 'emailjs-com';
+"use client";
+import React, { useState, useEffect } from "react";
+import { Send } from "lucide-react";
+import emailjs from "emailjs-com";
+import { motion } from "framer-motion";
+
+type Direction = "TOP" | "LEFT" | "BOTTOM" | "RIGHT";
 
 export default function Contact() {
-  const [formState, setFormState] = useState({ name: '', email: '', message: '' });
+  const [formState, setFormState] = useState({ name: "", email: "", message: "" });
   const [isSending, setIsSending] = useState(false);
   const [isSent, setIsSent] = useState(false);
+  const [errors, setErrors] = useState<{ name?: string; email?: string; message?: string }>({});
+
+  const validateForm = () => {
+    const newErrors: { name?: string; email?: string; message?: string } = {};
+
+    // Required field validation
+    if (!formState.name) {
+      newErrors.name = "Name is required.";
+    }
+
+    if (!formState.email) {
+      newErrors.email = "Email is required.";
+    } else if (!/\S+@\S+\.\S+/.test(formState.email)) {
+      newErrors.email = "Email address is invalid.";
+    }
+
+    if (!formState.message) {
+      newErrors.message = "Message is required.";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0; // return true if no errors
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!validateForm()) {
+      return; // Don't submit the form if there are validation errors
+    }
+
     setIsSending(true);
 
     const templateParams = {
@@ -18,16 +50,96 @@ export default function Contact() {
     };
 
     emailjs
-      .send('service_yo42mm6', 'template_apklrji', templateParams, 'eom1943uSKtoTVMXh')
+      .send("service_yo42mm6", "template_apklrji", templateParams, "eom1943uSKtoTVMXh")
       .then(() => {
         setIsSent(true);
-        setFormState({ name: '', email: '', message: '' });
+        setFormState({ name: "", email: "", message: "" });
 
         // Hide the notification after 3 seconds
         setTimeout(() => setIsSent(false), 3000);
       })
-      .catch((error) => console.error('Failed to send email:', error))
+      .catch((error) => console.error("Failed to send email:", error))
       .finally(() => setIsSending(false));
+  };
+
+  // Hover Border Gradient Component
+  const HoverBorderGradient = ({
+    children,
+    containerClassName,
+    className,
+    as: Tag = "button",
+    duration = 1,
+    clockwise = true,
+    ...props
+  }: React.PropsWithChildren<
+    {
+      as?: React.ElementType;
+      containerClassName?: string;
+      className?: string;
+      duration?: number;
+      clockwise?: boolean;
+    } & React.HTMLAttributes<HTMLElement>
+  >) => {
+    const [hovered, setHovered] = useState<boolean>(false);
+    const [direction, setDirection] = useState<Direction>("TOP");
+
+    const rotateDirection = (currentDirection: Direction): Direction => {
+      const directions: Direction[] = ["TOP", "LEFT", "BOTTOM", "RIGHT"];
+      const currentIndex = directions.indexOf(currentDirection);
+      const nextIndex = clockwise
+        ? (currentIndex - 1 + directions.length) % directions.length
+        : (currentIndex + 1) % directions.length;
+      return directions[nextIndex];
+    };
+
+    const movingMap: Record<Direction, string> = {
+      TOP: "radial-gradient(20.7% 50% at 50% 0%, hsl(0, 0%, 100%) 0%, rgba(255, 255, 255, 0) 100%)",
+      LEFT: "radial-gradient(16.6% 43.1% at 0% 50%, hsl(0, 0%, 100%) 0%, rgba(255, 255, 255, 0) 100%)",
+      BOTTOM:
+        "radial-gradient(20.7% 50% at 50% 100%, hsl(0, 0%, 100%) 0%, rgba(255, 255, 255, 0) 100%)",
+      RIGHT:
+        "radial-gradient(16.2% 41.199999999999996% at 100% 50%, hsl(0, 0%, 100%) 0%, rgba(255, 255, 255, 0) 100%)",
+    };
+
+    const highlight =
+      "radial-gradient(75% 181.15942028985506% at 50% 50%, #3275F8 0%, rgba(255, 255, 255, 0) 100%)";
+
+    useEffect(() => {
+      if (!hovered) {
+        const interval = setInterval(() => {
+          setDirection((prevState) => rotateDirection(prevState));
+        }, duration * 1000);
+        return () => clearInterval(interval);
+      }
+    }, [hovered]);
+
+    return (
+      <Tag
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        className={`relative flex rounded-lg border content-center bg-black/20 hover:bg-black/10 transition duration-300 dark:bg-white/20 items-center justify-center overflow-visible p-px ${containerClassName}`}
+        {...props}
+      >
+        <div className={`w-full text-white z-10 bg-black px-4 py-2 rounded-lg ${className}`}>
+          {children}
+        </div>
+        <motion.div
+          className="flex-none inset-0 overflow-hidden absolute z-0 rounded-lg"
+          style={{
+            filter: "blur(3px)",
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+          }}
+          initial={{ background: movingMap[direction] }}
+          animate={{
+            background: hovered ? [movingMap[direction], highlight] : movingMap[direction],
+          }}
+          transition={{ ease: "linear", duration: 0.4 }}
+        />
+        <div className="bg-black absolute z-1 flex-none inset-[2px] rounded-lg" />
+      </Tag>
+    );
   };
 
   return (
@@ -40,8 +152,17 @@ export default function Contact() {
 
         {/* Centered Success Notification */}
         {isSent && (
-          <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-violet-600 text-white px-6 py-3 rounded-lg shadow-lg transition-opacity duration-500 opacity-100">
+          <div className="fixed top-8 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-[#3275F8] to-[#ffffff] text-white px-6 py-3 rounded-lg shadow-lg transition-opacity duration-500 opacity-100 z-50">
             <p className="font-medium">Message sent successfully!</p>
+          </div>
+        )}
+
+        {/* Error messages */}
+        {Object.values(errors).length > 0 && (
+          <div className="text-red-500 mb-4">
+            {Object.values(errors).map((error, index) => (
+              <p key={index}>{error}</p>
+            ))}
           </div>
         )}
 
@@ -84,14 +205,25 @@ export default function Contact() {
               onChange={(e) => setFormState((prev) => ({ ...prev, message: e.target.value }))}
             />
           </div>
-          <button
-            type="submit"
-            className="w-full md:w-auto px-8 py-3 bg-violet-500 hover:bg-violet-600 text-white rounded-lg font-medium flex items-center justify-center gap-2 transition-colors group"
-            disabled={isSending}
+
+          {/* Hover Border Gradient Button */}
+          <HoverBorderGradient
+            containerClassName="rounded-lg"
+            as="button"
+            className="dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2 px-6 py-2"
           >
-            {isSending ? 'Sending...' : 'Send Message'}
-            <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </button>
+            {isSending ? (
+              <>
+                <span>Sending...</span>
+                <Send className="w-4 h-4 animate-spin" />
+              </>
+            ) : (
+              <>
+                <span>Send Message</span>
+                <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </>
+            )}
+          </HoverBorderGradient>
         </form>
       </div>
     </section>

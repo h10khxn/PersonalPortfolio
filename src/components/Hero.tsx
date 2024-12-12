@@ -85,13 +85,13 @@ export default function Hero() {
           {/* Name with bar under it */}
           <motion.h1
             className="text-5xl md:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 mb-2 neon-border flex items-center"
-            style={{ fontFamily: "'Noto Serif JP', serif" }}
+            style={{ fontFamily: "'Space Grotesk', serif" }}
             variants={{
               initial: { opacity: 0, x: -500 },
               animate: { opacity: 1, x: 0, transition: { duration: 1 } },
             }}
           >
-            I'm Hamdan Khan
+            Hamdan Khan
           </motion.h1>
           <div className="w-24 h-1 bg-violet-500 mb-4"></div>
 

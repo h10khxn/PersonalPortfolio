@@ -2,7 +2,6 @@ import React from 'react';
 import Hero from './components/Hero';
 import Skills from './components/Skills';
 import Contact from './components/Contact';
-import Background3D from './components/Background3D';
 import TechWheel from './components/TechWheel';
 import Header from './components/Header';
 import Certifications from './components/Certifications';

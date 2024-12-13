@@ -20,6 +20,10 @@ export default function App() {
       <section id="home" className="pt-0">
         <Hero />
       </section>
+      <section id="skills" className="py-0">
+        <Skills />
+      </section>
+
 
       <section id="technologies" className="py-0">
         <TechWheel />
@@ -32,9 +36,6 @@ export default function App() {
         </Routes>
       </section>
 
-      <section id="skills" className="py-0">
-        <Skills />
-      </section>
 
       <section id="certifications" className="py-0">
         <Certifications />

@@ -1,7 +1,16 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import compression from 'vite-plugin-compression';
 
-// https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    compression({
+      algorithm: 'gzip', // Use gzip for text compression
+      ext: '.gz', // File extension for compressed files
+      threshold: 1024, // Compress files larger than 1 KB
+      deleteOriginFile: false, // Keep the original file
+    }),
+  ],
 });
+

@@ -3,6 +3,9 @@ import react from '@vitejs/plugin-react';
 import compression from 'vite-plugin-compression';
 
 export default defineConfig({
+  build: {
+    outDir: 'dist',
+  },
   plugins: [
     react(),
     compression({

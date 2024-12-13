@@ -1,5 +1,8 @@
-import React, { useRef, useEffect, useMemo } from "react";
-import { motion, useAnimation, useMotionValue } from "framer-motion";
+import React, { useRef } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, FreeMode } from 'swiper/modules';
+import type { Swiper as SwiperType } from 'swiper';
+import 'swiper/css';
 
 const technologies = [
   { name: "Java", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original-wordmark.svg" },
@@ -14,111 +17,103 @@ const technologies = [
   { name: "React", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original-wordmark.svg" },
 ];
 
-export default function TechWheel() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const controls = useAnimation();
-  const x = useMotionValue(0);
-  let autoScrollTimer: number;
+const TechWheel: React.FC = () => {
+  const swiperRef = useRef<SwiperType>();
+  let autoplayTimeoutId: NodeJS.Timeout;
 
-  const extendedTechnologies = useMemo(() => {
-    return [...technologies, ...technologies, ...technologies];
-  }, []);
-
-  const startAutoScroll = () => {
-    const scrollWidth = containerRef.current?.scrollWidth || 0;
-    const viewportWidth = containerRef.current?.offsetWidth || 0;
-    const scrollDistance = -scrollWidth + viewportWidth;
-
-    controls.start({
-      x: [0, scrollDistance],
-      transition: {
-        duration: 50,
-        ease: "linear",
-        repeat: Infinity,
-      },
-    });
+  const handleMouseEnter = () => {
+    if (swiperRef.current?.autoplay) {
+      swiperRef.current.autoplay.stop();
+    }
   };
 
-  const handleDragStart = () => {
-    controls.stop();
-    clearTimeout(autoScrollTimer);
+  const handleMouseLeave = () => {
+    clearTimeout(autoplayTimeoutId);
+    autoplayTimeoutId = setTimeout(() => {
+      if (swiperRef.current?.autoplay) {
+        swiperRef.current.autoplay.start();
+      }
+    }, 100);
   };
-
-  const handleDragEnd = () => {
-    clearTimeout(autoScrollTimer);
-    autoScrollTimer = window.setTimeout(() => {
-      const currentX = x.get();
-      controls.start({
-        x: currentX,
-        transition: { duration: 0 }
-      }).then(() => {
-        startAutoScroll();
-      });
-    }, 1000);
-  };
-
-  useEffect(() => {
-    startAutoScroll();
-    return () => clearTimeout(autoScrollTimer);
-  }, []);
 
   return (
-    <div>
-      {/* Top Section with gradient */}
-      <section className="py-20 bg-gradient-to-b from-black to-gray-900">
+    <div className="bg-black">
+      <section className="py-10 bg-black">
         <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-center text-3xl font-bold text-white mb-12 tracking-wider">
-            TECHNOLOGIES
-          </h2>
+          
 
-          <div 
-            ref={containerRef}
-            className="max-w-7xl mx-auto overflow-hidden relative px-4"
-          >
-            <motion.div
-              className="flex gap-8"
-              style={{ x }}
-              drag="x"
-              dragConstraints={containerRef}
-              onDragStart={handleDragStart}
-              onDragEnd={handleDragEnd}
-              onTouchStart={handleDragStart}
-              onTouchEnd={handleDragEnd}
-              animate={controls}
-              whileTap={{ cursor: "grabbing" }}
-            >
-              {extendedTechnologies.map((tech, index) => (
-                <motion.div
-                  key={`${tech.name}-${index}`}
-                  className="flex flex-col items-center gap-3 min-w-[140px] py-6 px-4"
-                  whileHover={{ 
-                    scale: 1.1,
-                    transition: { type: "spring", stiffness: 300 }
-                  }}
-                >
-                  <div className="w-24 h-24 bg-gray-800/50 rounded-xl flex items-center justify-center backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 p-4">
-                    <img
-                      src={tech.logo}
-                      alt={`${tech.name} logo`}
-                      className="w-20 h-20 object-contain filter drop-shadow-lg transition-transform duration-300"
-                      loading="lazy"
-                      draggable="false"
-                    />
-                  </div>
-                  <span className="text-sm font-medium text-gray-300 tracking-wide">
-                    {tech.name}
-                  </span>
-                </motion.div>
-              ))}
-            </motion.div>
+          <div className="relative max-w-7xl mx-auto">
+            {/* Left and right gradient overlays */}
+            <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
+
+            <div className="overflow-hidden px-0">
+              <Swiper
+                modules={[Autoplay, FreeMode]}
+                spaceBetween={40}
+                slidesPerView={4}
+                loop={true}
+                speed={1500}
+                freeMode={{
+                  enabled: true,
+                  momentum: true,
+                  momentumRatio: 0.25,
+                }}
+                autoplay={{
+                  delay: 0,
+                  disableOnInteraction: false,
+                  pauseOnMouseEnter: false,
+                }}
+                breakpoints={{
+                  320: {
+                    slidesPerView: 2,
+                    spaceBetween: 20,
+                  },
+                  640: {
+                    slidesPerView: 3,
+                    spaceBetween: 30,
+                  },
+                  1024: {
+                    slidesPerView: 4,
+                    spaceBetween: 40,
+                  },
+                }}
+                onSwiper={(swiper) => {
+                  swiperRef.current = swiper;
+                }}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+                onTouchStart={handleMouseEnter}
+                onTouchEnd={handleMouseLeave}
+                className="tech-swiper"
+              >
+                {technologies.map((tech, index) => (
+                  <SwiperSlide key={`${tech.name}-${index}`}>
+                    <div
+                      className="flex flex-col items-center gap-4 py-6 px-4 transition-all duration-300 hover:scale-110"
+                      onMouseEnter={handleMouseEnter}
+                      onMouseLeave={handleMouseLeave}
+                    >
+                      <img
+                        src={tech.logo}
+                        alt={`${tech.name} logo`}
+                        className="w-24 h-24 md:w-32 md:h-32 object-contain filter drop-shadow-lg"
+                        loading="lazy"
+                        draggable="false"
+                      />
+                      <span className="text-xs md:text-sm font-medium text-gray-300 tracking-wide">
+                        {tech.name}
+                      </span>
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
           </div>
         </div>
       </section>
-
-      {/* Bottom Section with gradient */}
-      <section className="py-20 bg-gradient-to-t from-black to-gray-900">
-        {/* Content for the bottom section */}
-      </section>
     </div>
   );
-}
+};
+
+export default TechWheel;

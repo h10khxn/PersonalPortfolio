@@ -160,15 +160,18 @@ const NavigationButton = ({ direction, onClick }: {
 }) => (
   <motion.button
     onClick={onClick}
-    className={`absolute top-1/2 -translate-y-1/2 z-30 p-4 rounded-full bg-white/10 backdrop-blur-md text-white border border-white/20 shadow-lg ${
+    className={`absolute top-[calc(50%)] translate-y-[-50%] z-30 p-4 rounded-full bg-white/10 backdrop-blur-md text-white border border-white/20 shadow-lg w-12 h-12 flex items-center justify-center ${
       direction === 'left' ? '-left-4 lg:left-4' : '-right-4 lg:right-4'
     }`}
-    whileHover={{ scale: 1.1, backgroundColor: 'rgba(255, 255, 255, 0.2)' }}
-    whileTap={{ scale: 0.95 }}
+    whileHover={{ backgroundColor: 'rgba(255, 255, 255, 0.2)' }}
+    whileTap={{ scale: 1 }} // Prevent excessive scale effect
+    style={{ transformOrigin: 'center' }}
   >
     {direction === 'left' ? <ChevronLeft className="w-6 h-6" /> : <ChevronRight className="w-6 h-6" />}
   </motion.button>
 );
+
+
 
 export default function ProjectsAndDetails() {
   const { id } = useParams<{ id: string }>();
@@ -198,13 +201,22 @@ export default function ProjectsAndDetails() {
     return () => clearInterval(timer);
   }, [autoAdvance, project]);
 
+  const [isNavigating, setIsNavigating] = useState(false);
+
   const handleNavigation = (direction: 'next' | 'prev') => {
-    setAutoAdvance(false);
-    const newIndex = direction === 'next'
-      ? (currentIndex + 1) % projects.length
-      : (currentIndex - 1 + projects.length) % projects.length;
-    setCurrentIndex(newIndex);
+    if (isNavigating) return; // Prevent multiple clicks in quick succession
+    setIsNavigating(true);
+  
+    setCurrentIndex((prevIndex) =>
+      direction === 'next'
+        ? (prevIndex + 1) % projects.length
+        : (prevIndex - 1 + projects.length) % projects.length
+    );
+  
+    // Reset navigating state after a short delay
+    setTimeout(() => setIsNavigating(false), 300); // Adjust delay as needed
   };
+
 
   useEffect(() => {
     if (!autoAdvance) {
@@ -227,11 +239,12 @@ export default function ProjectsAndDetails() {
           <motion.h2 className="text-5xl font-bold text-white mb-8 text-center">
             Featured Projects
           </motion.h2>
-
-          <div className="relative w-full h-[calc(100vh-12rem)] max-h-[600px]">
+    
+          <div className="relative w-full h-full flex items-center justify-between">
+            {/* Navigation Buttons */}
             <NavigationButton direction="left" onClick={() => handleNavigation('prev')} />
             <NavigationButton direction="right" onClick={() => handleNavigation('next')} />
-
+    
             <div className="relative w-full max-w-4xl mx-auto h-full">
               <AnimatePresence>
                 {projects.map((project, index) => (

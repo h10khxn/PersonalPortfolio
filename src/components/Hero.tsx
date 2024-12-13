@@ -69,11 +69,19 @@ export default function Hero() {
 
       {/* Background gradient */}
       <motion.div
-        className="absolute inset-0 bg-gradient-to-br from-gray-900/70 to-black/70"
+        className="absolute inset-0 bg-gradient-to-br from-gray-900/70 to-gray/70"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 2 }}
       />
+      {/* Smooth black gradient at bottom */}
+      <motion.div
+        className="absolute bottom-0 w-full h-32 bg-gradient-to-t from-black to-transparent z-10"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+      />
+
 
       {/* Card component with animated globe */}
       <div className="absolute top-20 left-10 z-0 pointer-events-none">

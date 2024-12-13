@@ -28,7 +28,8 @@
     "styled-components": "^6.1.13",
     "swiper": "^11.1.15",
     "tailwind-merge": "^2.5.5",
-    "three": "^0.169.0"
+    "three": "^0.169.0",
+    "vite-plugin-compression": "^0.5.1"
   },
   "devDependencies": {
     "@types/node": "^22.9.0",

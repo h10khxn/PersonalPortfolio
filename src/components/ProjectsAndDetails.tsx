@@ -81,7 +81,7 @@ const ProjectCard = ({ project, index, currentIndex, totalProjects, onClick }: {
   const position = calculatePosition(index, currentIndex, totalProjects);
   const isActive = position === 0;
   const xOffset = position * 60;
-  const scale = 1 - Math.abs(position) * 0.2;
+  const scale = 0.85 - Math.abs(position) * 0.2; // Reduced scale to make cards smaller
   const opacity = 1 - Math.abs(position) * 0.3;
   const zIndex = isActive ? 1 : 0;
 
@@ -102,7 +102,7 @@ const ProjectCard = ({ project, index, currentIndex, totalProjects, onClick }: {
       }}
     >
       <motion.div
-        className="w-full h-full rounded-2xl overflow-hidden cursor-pointer bg-gray-800/50 backdrop-blur-xl group"
+        className="w-[85%] h-[85%] rounded-2xl overflow-hidden cursor-pointer bg-gray-800/50 backdrop-blur-xl group"
         onClick={onClick}
         whileHover={isActive ? { scale: 1.02 } : {}}
       >
@@ -113,21 +113,17 @@ const ProjectCard = ({ project, index, currentIndex, totalProjects, onClick }: {
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
-          
           <div className="absolute inset-0 p-6 flex flex-col justify-end transform transition-transform duration-300">
             <div className="flex items-center gap-2 text-violet-300 mb-2">
               <Calendar className="w-4 h-4" />
               <span className="text-sm">{project.date}</span>
             </div>
-            
             <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-violet-300 transition-colors">
               {project.title}
             </h3>
-            
             <p className="text-gray-300 mb-4 line-clamp-2 group-hover:text-white transition-colors">
               {project.description}
             </p>
-            
             <div className="flex flex-wrap gap-2">
               {project.tech.slice(0, 3).map((tech, index) => (
                 <motion.span
@@ -164,14 +160,12 @@ const NavigationButton = ({ direction, onClick }: {
       direction === 'left' ? '-left-4 lg:left-4' : '-right-4 lg:right-4'
     }`}
     whileHover={{ backgroundColor: 'rgba(255, 255, 255, 0.2)' }}
-    whileTap={{ scale: 1 }} // Prevent excessive scale effect
+    whileTap={{ scale: 1 }}
     style={{ transformOrigin: 'center' }}
   >
     {direction === 'left' ? <ChevronLeft className="w-6 h-6" /> : <ChevronRight className="w-6 h-6" />}
   </motion.button>
 );
-
-
 
 export default function ProjectsAndDetails() {
   const { id } = useParams<{ id: string }>();
@@ -204,19 +198,15 @@ export default function ProjectsAndDetails() {
   const [isNavigating, setIsNavigating] = useState(false);
 
   const handleNavigation = (direction: 'next' | 'prev') => {
-    if (isNavigating) return; // Prevent multiple clicks in quick succession
+    if (isNavigating) return;
     setIsNavigating(true);
-  
     setCurrentIndex((prevIndex) =>
       direction === 'next'
         ? (prevIndex + 1) % projects.length
         : (prevIndex - 1 + projects.length) % projects.length
     );
-  
-    // Reset navigating state after a short delay
-    setTimeout(() => setIsNavigating(false), 300); // Adjust delay as needed
+    setTimeout(() => setIsNavigating(false), 300);
   };
-
 
   useEffect(() => {
     if (!autoAdvance) {
@@ -239,12 +229,9 @@ export default function ProjectsAndDetails() {
           <motion.h2 className="text-5xl font-bold text-white mb-8 text-center">
             Featured Projects
           </motion.h2>
-    
           <div className="relative w-full h-full flex items-center justify-between">
-            {/* Navigation Buttons */}
             <NavigationButton direction="left" onClick={() => handleNavigation('prev')} />
             <NavigationButton direction="right" onClick={() => handleNavigation('next')} />
-    
             <div className="relative w-full max-w-4xl mx-auto h-full">
               <AnimatePresence>
                 {projects.map((project, index) => (
@@ -281,7 +268,6 @@ export default function ProjectsAndDetails() {
           <ArrowLeft className="w-5 h-5" />
           <span className="group-hover:underline">Back to Projects</span>
         </motion.button>
-
         <motion.div
           className="bg-gray-800/50 backdrop-blur-xl rounded-2xl overflow-hidden shadow-2xl border border-white/10"
           initial={{ y: 20, opacity: 0 }}
@@ -296,21 +282,17 @@ export default function ProjectsAndDetails() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent" />
           </div>
-          
           <div className="p-8">
             <div className="flex items-center gap-2 text-violet-300 mb-4">
               <Calendar className="w-4 h-4" />
               <span className="text-sm">{project.date}</span>
             </div>
-
             <h2 className="text-4xl font-bold text-white mb-4 bg-clip-text text-transparent bg-gradient-to-r from-violet-400 to-violet-200">
               {project.title}
             </h2>
-            
             <p className="text-gray-300 mb-8 leading-relaxed">
               {project.description}
             </p>
-            
             <div className="flex flex-wrap gap-2 mb-8">
               {project.tech.map((tech, i) => (
                 <motion.span
@@ -325,6 +307,9 @@ export default function ProjectsAndDetails() {
           </div>
         </motion.div>
       </div>
+      {/* Gradient Overlay at the Bottom */}
+      
+
     </motion.section>
   );
 }

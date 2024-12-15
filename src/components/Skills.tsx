@@ -110,7 +110,6 @@ const skillCardVariants = {
 export default function Skills() {
   const [activeSkill, setActiveSkill] = useState<number | null>(null);
   const [hoveredTag, setHoveredTag] = useState<string | null>(null);
-  const [titleAnimated, setTitleAnimated] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   const titleControls = useAnimation();
   const skillsControls = useAnimation();
@@ -124,7 +123,6 @@ export default function Skills() {
     const sequence = async () => {
       if (isInView) {
         await titleControls.start("animate");
-        setTitleAnimated(true);
         await titleControls.start("moveUp");
         await skillsControls.start("animate");
       }
@@ -278,23 +276,20 @@ export default function Skills() {
       </div>
 
       {/* Floating particles */}
-      {[...Array(12)].map((_, i) => (
+      {[...Array(50)].map((_, i) => (
         <motion.div
           key={i}
           className="absolute w-1 h-1 bg-violet-500/50 rounded-full"
           initial={{
             x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1000),
-            y: Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 1000),
+            y: Math.random() * 500,
           }}
           animate={{
-            y: [
-              Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 1000), 
-              -20
-            ],
+            y: [Math.random() * 500, -50],
             opacity: [0.5, 0],
           }}
           transition={{
-            duration: Math.random() * 10 + 10,
+            duration: Math.random() * 5 + 5,
             repeat: Infinity,
             ease: "linear",
           }}

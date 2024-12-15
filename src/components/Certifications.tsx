@@ -14,7 +14,7 @@ const certifications = [
     title: 'Harvard CS50x: Introduction to Computer Science',
     issuer: 'Harvard University via edX',
     date: 'Currently Enrolled',
-    description: 'A comprehensive introduction to computer science covering programming fundamentals, algorithms, data structures, Aritificial intelligence, Deep learning and web development using languages like C, Python, SQL, and JavaScript.',
+    description: 'A comprehensive introduction to computer science covering programming fundamentals, algorithms, data structures, Artificial intelligence, Deep learning and web development using languages like C, Python, SQL, and JavaScript.',
     url: 'https://pll.harvard.edu/course/cs50-introduction-computer-science'
   },
   {
@@ -79,6 +79,14 @@ const glowVariants = {
 export default function Certifications() {
   return (
     <div className="w-full py-20 bg-black/50 backdrop-blur-sm overflow-hidden relative">
+      {/* Top Gradient to Match Section Above */}
+      <motion.div
+        className="absolute top-0 w-full h-32 bg-gradient-to-b from-black to-transparent z-10"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 2 }}
+      />
+
       {/* Animated background glow effects */}
       <motion.div
         className="absolute top-0 left-1/4 w-96 h-96 bg-violet-500/20 rounded-full filter blur-[100px]"
@@ -112,7 +120,7 @@ export default function Certifications() {
         transition={{ duration: 2 }}
       />
 
-      <div className="max-w-7xl mx-auto px-4 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 relative z-20">
         {/* Animated heading */}
         <motion.div 
           className="text-center mb-16"

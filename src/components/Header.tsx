@@ -52,81 +52,79 @@ export default function Header() {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            {/* Logo */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+          {/* Logo - Aligned far left */}
+          <motion.div
+            className="relative group z-10 mr-auto"
+            whileHover={{ scale: 1.05 }}
+            transition={{ type: "spring", stiffness: 400 }}
+          >
+            <Link
+              to="home"
+              smooth={true}
+              duration={500}
+              className="text-2xl font-bold cursor-pointer bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent hover:from-violet-500 hover:to-purple-600 transition-all"
+              onClick={() => setIsOpen(false)}
+            >
+              Hamdan Khan
+            </Link>
             <motion.div
-              className="relative group z-10"
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: "spring", stiffness: 400 }}
-            >
-              <Link
-                to="home"
-                smooth={true}
-                duration={500}
-                className="text-2xl font-bold cursor-pointer bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent hover:from-violet-500 hover:to-purple-600 transition-all"
-                onClick={() => setIsOpen(false)}
-              >
-                Hamdan Khan
-              </Link>
+              className="absolute -bottom-1 left-0 w-0 h-0.5 bg-violet-400 group-hover:w-full transition-all duration-300"
+              whileHover={{ width: "100%" }}
+            />
+          </motion.div>
+
+          {/* Desktop Navigation - Aligned right */}
+          <motion.nav
+            className="hidden md:flex space-x-8 ml-auto"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            {navItems.map(({ name, icon: Icon }) => (
               <motion.div
-                className="absolute -bottom-1 left-0 w-0 h-0.5 bg-violet-400 group-hover:w-full transition-all duration-300"
-                whileHover={{ width: "100%" }}
-              />
-            </motion.div>
-
-            {/* Desktop Navigation */}
-            <motion.nav
-              className="hidden md:flex space-x-8"
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              {navItems.map(({ name, icon: Icon }) => (
-                <motion.div
-                  key={name}
-                  whileHover={{ scale: 1.05 }}
-                  className="relative group"
+                key={name}
+                whileHover={{ scale: 1.05 }}
+                className="relative group"
+              >
+                <Link
+                  to={name.toLowerCase()}
+                  smooth={true}
+                  duration={500}
+                  offset={-70}
+                  className="text-gray-300 hover:text-violet-400 transition-colors duration-300 flex items-center gap-1.5"
+                  onSetActive={() => setActiveSection(name.toLowerCase())}
                 >
-                  <Link
-                    to={name.toLowerCase()}
-                    smooth={true}
-                    duration={500}
-                    offset={-70}
-                    className="text-gray-300 hover:text-violet-400 transition-colors duration-300 flex items-center gap-1.5"
-                    onSetActive={() => setActiveSection(name.toLowerCase())}
-                  >
-                    <Icon size={16} className="opacity-75" />
-                    {name}
-                  </Link>
-                  <motion.div
-                    className="absolute -bottom-1 left-0 w-0 h-0.5 bg-violet-400 group-hover:w-full transition-all duration-300"
-                    whileHover={{ width: "100%" }}
-                  />
-                </motion.div>
-              ))}
-            </motion.nav>
-
-            {/* Mobile Menu Button */}
-            <motion.button
-              onClick={toggleMenu}
-              className="md:hidden relative z-20 p-2 rounded-lg bg-gray-800/50 text-gray-300"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <AnimatePresence mode="wait">
+                  <Icon size={16} className="opacity-75" />
+                  {name}
+                </Link>
                 <motion.div
-                  key={isOpen ? "close" : "menu"}
-                  initial={{ opacity: 0, rotate: -90 }}
-                  animate={{ opacity: 1, rotate: 0 }}
-                  exit={{ opacity: 0, rotate: 90 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  {isOpen ? <X size={24} /> : <Menu size={24} />}
-                </motion.div>
-              </AnimatePresence>
-            </motion.button>
-          </div>
+                  className="absolute -bottom-1 left-0 w-0 h-0.5 bg-violet-400 group-hover:w-full transition-all duration-300"
+                  whileHover={{ width: "100%" }}
+                />
+              </motion.div>
+            ))}
+          </motion.nav>
+
+          {/* Mobile Menu Button - Aligned far right */}
+          <motion.button
+            onClick={toggleMenu}
+            className="md:hidden relative z-20 p-2 rounded-lg bg-gray-800/50 text-gray-300 ml-auto"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={isOpen ? "close" : "menu"}
+                initial={{ opacity: 0, rotate: -90 }}
+                animate={{ opacity: 1, rotate: 0 }}
+                exit={{ opacity: 0, rotate: 90 }}
+                transition={{ duration: 0.2 }}
+              >
+                {isOpen ? <X size={24} /> : <Menu size={24} />}
+              </motion.div>
+            </AnimatePresence>
+          </motion.button>
         </div>
       </motion.div>
 

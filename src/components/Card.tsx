@@ -6,80 +6,12 @@ const Card = () => {
     <StyledWrapper>
       <div className="section-banner">
         <div id="globe" /> {/* Moved globe to the left */}
-        <div id="star-1">
-          <div className="curved-corner-star">
-            <div id="curved-corner-bottomright" />
-            <div id="curved-corner-bottomleft" />
-          </div>
-          <div className="curved-corner-star">
-            <div id="curved-corner-topright" />
-            <div id="curved-corner-topleft" />
-          </div>
-        </div>
-        <div id="star-2">
-          <div className="curved-corner-star">
-            <div id="curved-corner-bottomright" />
-            <div id="curved-corner-bottomleft" />
-          </div>
-          <div className="curved-corner-star">
-            <div id="curved-corner-topright" />
-            <div id="curved-corner-topleft" />
-          </div>
-        </div>
-        <div id="star-3">
-          <div className="curved-corner-star">
-            <div id="curved-corner-bottomright" />
-            <div id="curved-corner-bottomleft" />
-          </div>
-          <div className="curved-corner-star">
-            <div id="curved-corner-topright" />
-            <div id="curved-corner-topleft" />
-          </div>
-        </div>
-        <div id="star-4">
-          <div className="curved-corner-star">
-            <div id="curved-corner-bottomright" />
-            <div id="curved-corner-bottomleft" />
-          </div>
-          <div className="curved-corner-star">
-            <div id="curved-corner-topright" />
-            <div id="curved-corner-topleft" />
-          </div>
-        </div>
-        <div id="star-5">
-          <div className="curved-corner-star">
-            <div id="curved-corner-bottomright" />
-            <div id="curved-corner-bottomleft" />
-          </div>
-          <div className="curved-corner-star">
-            <div id="curved-corner-topright" />
-            <div id="curved-corner-topleft" />
-          </div>
-        </div>
-        <div id="star-6">
-          <div className="curved-corner-star">
-            <div id="curved-corner-bottomright" />
-            <div id="curved-corner-bottomleft" />
-          </div>
-          <div className="curved-corner-star">
-            <div id="curved-corner-topright" />
-            <div id="curved-corner-topleft" />
-          </div>
-        </div>
-        <div id="star-7">
-          <div className="curved-corner-star">
-            <div id="curved-corner-bottomright" />
-            <div id="curved-corner-bottomleft" />
-          </div>
-          <div className="curved-corner-star">
-            <div id="curved-corner-topright" />
-            <div id="curved-corner-topleft" />
-          </div>
-        </div>
+        <div className="stars" /> {/* Single container for all stars */}
       </div>
     </StyledWrapper>
   );
 };
+
 
 const StyledWrapper = styled.div`
   .section-banner {
@@ -99,21 +31,22 @@ const StyledWrapper = styled.div`
     z-index: -1;
     margin-right: 400px;
     border-radius: 50%;
-    animation: earthRotate 35s linear infinite; /* Adjust duration for slower or faster spin */
+    animation: earthSpin 20s linear infinite;
     box-shadow: 0px 0 20px RGBA(255, 255, 255, 0.2), -5px 0px 8px #c3f4ff inset,
       15px 2px 25px #000 inset, -24px -2px 34px #c3f4ff99 inset,
       250px 0px 44px #00000066 inset, 150px 0px 38px #000000aa inset;
       filter: brightness(0.45);
   }
 
-  @keyframes earthRotate {
-    0% {
-      background-position: 0 center;
-    }
-    100% {
-      background-position: 1000px center; /* Adjust the distance for a seamless horizontal scroll */
-    }
+  @keyframes earthSpin {
+  0% {
+    background-position-x: 0;
   }
+  100% {
+    background-position-x: 100%; /* Move the background horizontally */
+  }
+}
+
   .curved-corner-star {
     display: flex;
     position: relative;

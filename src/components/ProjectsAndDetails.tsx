@@ -48,7 +48,7 @@ const projects: Project[] = [
   {
     id: 5,
     title: "AI Controlled 2D Car Racing Game",
-    description: "Trained an AI model to play my old 2D car racing game using Reinforcement Learning with PPO algorithms.",
+    description: "Developed and trained an AI model using Reinforcement Learning with a custom Deep Q- Neural Network to play and adaptively improve performance in my 2D car racing game.",
     tech: ["Python", "Pygame", "NumPy", "Gym", "Stable Baseline3"],
     image: "https://images.unsplash.com/photo-1511994298241-608e28f14fde?auto=format&fit=crop&q=80&w=800",
     date: "2024",
@@ -227,7 +227,7 @@ export default function ProjectsAndDetails() {
       >
         <div className="flex-1 flex flex-col items-center justify-center px-4">
           <motion.h2 className="text-5xl font-bold text-white mb-8 text-center">
-            Featured Projects
+            FEATURED PROJECTS
           </motion.h2>
           <div className="relative w-full h-full flex items-center justify-between">
             <NavigationButton direction="left" onClick={() => handleNavigation('prev')} />

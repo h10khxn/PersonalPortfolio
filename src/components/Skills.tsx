@@ -11,7 +11,7 @@ const skills = [
   {
     category: "Backend Development",
     icon: Code2,
-    items: ["Java", "Python", "API's", "PHP"],
+    items: ["Java", "Python", "API's", "PHP", "Node.js"],
   },
   {
     category: "Database Systems",
@@ -131,10 +131,10 @@ export default function Skills() {
   }, [isInView, titleControls, skillsControls]);
 
   const titleWords = [
-    { text: "Explore", highlight: true },
-    { text: "My", highlight: false },
-    { text: "Technical", highlight: true },
-    { text: "Skills", highlight: false },
+    { text: "EXPLORE", highlight: true },
+    { text: "MY", highlight: false },
+    { text: "TECHNICAL", highlight: true },
+    { text: "SKILLS", highlight: false },
   ];
 
   return (

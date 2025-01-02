@@ -152,7 +152,7 @@ export default function Hero() {
               >
                 Hello there! Welcome to my portfolio. I'm currently pursuing a degree in Software Engineering.   
                 I specialize in building and designing exceptional websites, automated tools,
-              applications, and everything in between. I am currently exploring the vast domain of Artifical Intelligence and Machine Learning! Feel free to navigate through to learn more
+                applications, and everything in between. I am currently exploring the vast domain of Artifical Intelligence and Deep Learning! Feel free to navigate through to learn more
                 about my work.
               </motion.p>
 

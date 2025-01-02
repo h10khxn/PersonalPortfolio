@@ -23,6 +23,20 @@ const certifications = [
     date: 'August 2020',
     description: 'An in-depth course covering Python fundamentals, object-oriented programming, data structures, and other advanced techniques including real-world applications for automation and data processing.',
     url: 'https://www.udemy.com/certificate/UC-87877d62-3c66-4547-a35b-da992f714ddb/'
+  },
+  {
+    title: 'Harvard CS50: Introduction to Artificial Intelligence with Python',
+    issuer: 'Harvard University via edX',
+    date: 'Currently Enrolled',
+    description: 'Explored foundational concepts of artificial intelligence, including graph search algorithms, machine learning, reinforcement learning, and optimization. Built intelligent systems and applications using Python and machine learning libraries, with a focus on technologies like game-playing engines, recommendation systems, and handwriting recognition.',
+    url: 'https://pll.harvard.edu/course/cs50s-introduction-artificial-intelligence-python'
+  },
+  {
+    title: 'Harvard CS50W: Web Programming with Python and JavaScript',
+    issuer: 'Harvard University via edX',
+    date: 'Currently Enrolled',
+    description: 'Developed web applications using HTML, CSS, JavaScript, Python, and Django. Worked on database design, API integration, scalability, security, and user experience. Leveraged tools like Git, Heroku, and SQL to design, implement, and deploy dynamic, scalable web applications.',
+    url: 'https://pll.harvard.edu/course/cs50s-web-programming-python-and-javascript'
   }
 ];
 

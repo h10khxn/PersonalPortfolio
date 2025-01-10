@@ -16,7 +16,7 @@ const projects: Project[] = [
   {
     id: 1,
     title: "Hospital Laboratory Database System",
-    description: "Led development of a system to automate test ordering, result processing, and billing for hospital labs.",
+    description: "Led development of a system to automate test ordering, result processing, and billing for a hospital labratory.",
     tech: ["PHP", "REST API","Fetch API", "MySQL", "HTML", "CSS", "JavaScript"],
     image: "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&q=80&w=800",
     date: "2024",
@@ -24,7 +24,7 @@ const projects: Project[] = [
   {
     id: 2,
     title: "Mock Airport System",
-    description: "Developed a robust mock airport management system in Java.",
+    description: "Developed a robust mock airport management system using Java.",
     tech: ["Java", "OOP"],
     image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&q=80&w=800",
     date: "2023",
@@ -56,7 +56,7 @@ const projects: Project[] = [
   {
     id: 6,
     title: "Weather App",
-    description: "Developed a weather app that displays the current weather and forecast for any location around the world. Favorited cities displayed on main page.",
+    description: "Developed a weather app that displays the current weather and forecast for any location around the world. Favorited cities displayed on main page. Used a Rest API to fetch weather data.",
     tech: ["React", "TypeScript", "Tanstack Query", "Tailwind CSS", "OpenWeatherMap Rest API"],
     image: '/SKYCAST.PNG',
     date: '2024'

@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Award, ExternalLink, Calendar, Building2, CheckCircle } from 'lucide-react';
-
+{/* Links are commented out for now. */}
 const certifications = [
   {
     title: 'Seize the Moment: Software Development Training',
@@ -13,7 +13,7 @@ const certifications = [
   {
     title: 'Harvard CS50x: Introduction to Computer Science',
     issuer: 'Harvard University via edX',
-    date: 'Currently Enrolled',
+    date: 'January 2025',
     description: 'A comprehensive introduction to computer science covering programming fundamentals, algorithms, data structures, Artificial intelligence, Deep learning and web development using languages like C, Python, SQL, and JavaScript.',
     url: 'https://pll.harvard.edu/course/cs50-introduction-computer-science'
   },
@@ -27,7 +27,7 @@ const certifications = [
   {
     title: 'Harvard CS50: Introduction to Artificial Intelligence with Python',
     issuer: 'Harvard University via edX',
-    date: 'Currently Enrolled',
+    date: 'December 2024',
     description: 'Explored foundational concepts of artificial intelligence, including graph search algorithms, machine learning, reinforcement learning, and optimization. Built intelligent systems and applications using Python and machine learning libraries, with a focus on technologies like game-playing engines, recommendation systems, and handwriting recognition.',
     url: 'https://pll.harvard.edu/course/cs50s-introduction-artificial-intelligence-python'
   },
@@ -231,7 +231,7 @@ export default function Certifications() {
                     </p>
                   </motion.div>
                   
-                  <motion.a 
+                  {/* <motion.a 
                     href={cert.url}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -252,7 +252,7 @@ export default function Certifications() {
                     >
                       <ExternalLink className="w-4 h-4" />
                     </motion.div>
-                  </motion.a>
+                  </motion.a> */}
 
                   {/* Completion indicator */}
                   <motion.div

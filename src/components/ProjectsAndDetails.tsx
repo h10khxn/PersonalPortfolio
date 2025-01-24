@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Calendar, ArrowLeft } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Calendar, ArrowLeft, Globe, Github } from 'lucide-react';
 
 interface Project {
   id: number;
@@ -10,6 +10,10 @@ interface Project {
   tech: string[];
   image: string;
   date: string;
+  links?: {
+    live?: string;
+    github?: string;
+  };
 }
 
 const projects: Project[] = [
@@ -59,7 +63,10 @@ const projects: Project[] = [
     description: "Developed a weather app that displays the current weather and forecast for any location around the world. Favorited cities displayed on main page. Used a Rest API to fetch weather data.",
     tech: ["React", "TypeScript", "Tanstack Query", "Tailwind CSS", "OpenWeatherMap Rest API"],
     image: '/SKYCAST.PNG',
-    date: '2024'
+    date: '2024',
+    links: {
+      live: "https://skycastweathernet.netlify.app/",
+    }
   },
 ];
 
@@ -81,7 +88,7 @@ const ProjectCard = ({ project, index, currentIndex, totalProjects, onClick }: {
   const position = calculatePosition(index, currentIndex, totalProjects);
   const isActive = position === 0;
   const xOffset = position * 60;
-  const scale = 0.85 - Math.abs(position) * 0.2; // Reduced scale to make cards smaller
+  const scale = 0.85 - Math.abs(position) * 0.2;
   const opacity = 1 - Math.abs(position) * 0.3;
   const zIndex = isActive ? 1 : 0;
 
@@ -154,17 +161,24 @@ const NavigationButton = ({ direction, onClick }: {
   direction: 'left' | 'right';
   onClick: () => void;
 }) => (
-  <motion.button
-    onClick={onClick}
-    className={`absolute top-[calc(50%)] translate-y-[-50%] z-30 p-4 rounded-full bg-white/10 backdrop-blur-md text-white border border-white/20 shadow-lg w-12 h-12 flex items-center justify-center ${
-      direction === 'left' ? '-left-4 lg:left-4' : '-right-4 lg:right-4'
+  <div 
+    className={`fixed top-1/2 -translate-y-1/2 z-30 ${
+      direction === 'left' ? 'left-4' : 'right-4'
     }`}
-    whileHover={{ backgroundColor: 'rgba(255, 255, 255, 0.2)' }}
-    whileTap={{ scale: 1 }}
-    style={{ transformOrigin: 'center' }}
   >
-    {direction === 'left' ? <ChevronLeft className="w-6 h-6" /> : <ChevronRight className="w-6 h-6" />}
-  </motion.button>
+    <motion.button
+      onClick={(e) => {
+        e.stopPropagation();
+        onClick();
+      }}
+      className="p-4 rounded-full bg-white/10 backdrop-blur-md text-white border border-white/20 shadow-lg w-12 h-12 flex items-center justify-center"
+      whileHover={{ backgroundColor: 'rgba(255, 255, 255, 0.2)' }}
+      whileTap={{ scale: 0.95 }}
+      initial={false}
+    >
+      {direction === 'left' ? <ChevronLeft className="w-6 h-6" /> : <ChevronRight className="w-6 h-6" />}
+    </motion.button>
+  </div>
 );
 
 export default function ProjectsAndDetails() {
@@ -195,27 +209,14 @@ export default function ProjectsAndDetails() {
     return () => clearInterval(timer);
   }, [autoAdvance, project]);
 
-  const [isNavigating, setIsNavigating] = useState(false);
-
   const handleNavigation = (direction: 'next' | 'prev') => {
-    if (isNavigating) return;
-    setIsNavigating(true);
+    setAutoAdvance(false);
     setCurrentIndex((prevIndex) =>
       direction === 'next'
         ? (prevIndex + 1) % projects.length
         : (prevIndex - 1 + projects.length) % projects.length
     );
-    setTimeout(() => setIsNavigating(false), 300);
   };
-
-  useEffect(() => {
-    if (!autoAdvance) {
-      const timer = setTimeout(() => {
-        setAutoAdvance(true);
-      }, 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [autoAdvance]);
 
   if (!project) {
     return (
@@ -254,7 +255,7 @@ export default function ProjectsAndDetails() {
 
   return (
     <motion.section 
-      className="h-screen overflow-y-auto bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-violet-900/20 via-gray-900 to-black"
+      className="min-h-screen overflow-y-auto bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-violet-900/20 via-gray-900 to-black"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -304,12 +305,39 @@ export default function ProjectsAndDetails() {
                 </motion.span>
               ))}
             </div>
+            {project.links && (
+              <div className="flex gap-4">
+                {project.links.live && (
+                  <motion.a
+                    href={project.links.live}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 px-4 py-2 bg-violet-500/20 text-violet-300 rounded-lg backdrop-blur-sm border border-violet-500/20 hover:bg-violet-500/30 transition-colors"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <Globe className="w-5 h-5" />
+                    <span>Live Demo</span>
+                  </motion.a>
+                )}
+                {project.links.github && (
+                  <motion.a
+                    href={project.links.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 px-4 py-2 bg-violet-500/20 text-violet-300 rounded-lg backdrop-blur-sm border border-violet-500/20 hover:bg-violet-500/30 transition-colors"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <Github className="w-5 h-5" />
+                    <span>View Code</span>
+                  </motion.a>
+                )}
+              </div>
+            )}
           </div>
         </motion.div>
       </div>
-      {/* Gradient Overlay at the Bottom */}
-      
-
     </motion.section>
   );
 }

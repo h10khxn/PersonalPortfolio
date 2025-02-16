@@ -162,7 +162,7 @@ const NavigationButton = ({ direction, onClick }: {
   onClick: () => void;
 }) => (
   <div 
-    className={`fixed top-1/2 -translate-y-1/2 z-30 ${
+    className={`absolute top-1/2 -translate-y-1/2 z-30 ${
       direction === 'left' ? 'left-4' : 'right-4'
     }`}
   >
@@ -173,7 +173,7 @@ const NavigationButton = ({ direction, onClick }: {
       }}
       className="p-4 rounded-full bg-white/10 backdrop-blur-md text-white border border-white/20 shadow-lg w-12 h-12 flex items-center justify-center"
       whileHover={{ backgroundColor: 'rgba(255, 255, 255, 0.2)' }}
-      whileTap={{ scale: 0.95 }}
+      whileTap={{ scale: 1 }}
       initial={false}
     >
       {direction === 'left' ? <ChevronLeft className="w-6 h-6" /> : <ChevronRight className="w-6 h-6" />}
@@ -210,7 +210,6 @@ export default function ProjectsAndDetails() {
   }, [autoAdvance, project]);
 
   const handleNavigation = (direction: 'next' | 'prev') => {
-    setAutoAdvance(false);
     setCurrentIndex((prevIndex) =>
       direction === 'next'
         ? (prevIndex + 1) % projects.length

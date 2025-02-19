@@ -14,6 +14,7 @@ const isInAppBrowser = (): boolean => {
   );
 };
 
+// Popup component to show the redirect message
 const RedirectPopup = () => {
   const [showPopup, setShowPopup] = useState(false);
 
@@ -22,11 +23,6 @@ const RedirectPopup = () => {
       setShowPopup(true);
     }
   }, []);
-
-  const handleRedirect = () => {
-    const url = window.location.href;
-    window.open(url, "_blank");
-  };
 
   if (!showPopup) return null;
 
@@ -51,10 +47,12 @@ const RedirectPopup = () => {
     >
       <p style={{ fontSize: "18px", marginBottom: "20px" }}>
         ⚠️ You're using an in-app browser.  
-        For the best experience, please open this page in your default browser.
+        Please open this page in your default browser for the best experience.
       </p>
-      <button
-        onClick={handleRedirect}
+      <a
+        href={window.location.href}
+        target="_blank"
+        rel="noopener noreferrer"
         style={{
           padding: "10px 20px",
           fontSize: "16px",
@@ -62,11 +60,11 @@ const RedirectPopup = () => {
           backgroundColor: "#007bff",
           border: "none",
           borderRadius: "5px",
-          cursor: "pointer",
+          textDecoration: "none",
         }}
       >
         Open in Browser
-      </button>
+      </a>
     </div>
   );
 };

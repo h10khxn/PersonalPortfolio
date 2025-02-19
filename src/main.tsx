@@ -9,18 +9,23 @@ import App from "./App.tsx";
 const isInAppBrowser = (): boolean => {
   const ua = navigator.userAgent || navigator.vendor;
   return (
-    /FBAN|FBAV|Instagram|LinkedIn|Twitter/i.test(ua) &&
+    /FBAN|FBAV|Instagram|LinkedIn|Twitter|Snapchat/i.test(ua) &&
     /Mobile|Android|iPhone|iPad/i.test(ua)
   );
 };
 
-// Popup component to show the redirect message
+// Automatically copy the URL to clipboard
+const copyToClipboard = () => {
+  navigator.clipboard.writeText(window.location.href);
+};
+
 const RedirectPopup = () => {
   const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
     if (isInAppBrowser()) {
       setShowPopup(true);
+      copyToClipboard(); // Auto-copy URL
     }
   }, []);
 
@@ -34,7 +39,7 @@ const RedirectPopup = () => {
         left: 0,
         width: "100%",
         height: "100%",
-        backgroundColor: "rgba(0, 0, 0, 0.8)",
+        backgroundColor: "rgba(0, 0, 0, 0.9)",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -45,26 +50,17 @@ const RedirectPopup = () => {
         padding: "20px",
       }}
     >
-      <p style={{ fontSize: "18px", marginBottom: "20px" }}>
-        ⚠️ You're using an in-app browser.  
-        Please open this page in your default browser for the best experience.
+      <p style={{ fontSize: "18px", marginBottom: "20px", fontWeight: "bold" }}>
+        ⚠️ You're using an in-app browser.
       </p>
-      <a
-        href={window.location.href}
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{
-          padding: "10px 20px",
-          fontSize: "16px",
-          color: "white",
-          backgroundColor: "#007bff",
-          border: "none",
-          borderRadius: "5px",
-          textDecoration: "none",
-        }}
-      >
-        Open in Browser
-      </a>
+      <p style={{ fontSize: "16px", marginBottom: "20px" }}>
+        📋 **The link has been copied!** Paste it into **Chrome** or **Safari** for the best experience.
+      </p>
+      <p style={{ fontSize: "14px", opacity: 0.8, lineHeight: "1.5" }}>
+        **To open in your browser:**  
+        🔹 Tap the **three dots** in the top-right corner  
+        🔹 Select **"Open in Browser"**  
+      </p>
     </div>
   );
 };

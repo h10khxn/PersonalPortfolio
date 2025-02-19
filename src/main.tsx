@@ -39,28 +39,47 @@ const RedirectPopup = () => {
         left: 0,
         width: "100%",
         height: "100%",
-        backgroundColor: "rgba(0, 0, 0, 0.9)",
+        backgroundColor: "rgba(0, 0, 0, 0.8)", // Dark background overlay
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        flexDirection: "column",
-        color: "white",
-        zIndex: 9999,
         textAlign: "center",
+        zIndex: 9999,
         padding: "20px",
       }}
     >
-      <p style={{ fontSize: "18px", marginBottom: "20px", fontWeight: "bold" }}>
-        ⚠️ You're using an in-app browser.
-      </p>
-      <p style={{ fontSize: "16px", marginBottom: "20px" }}>
-        📋 **The link has been copied!** Paste it into **Chrome** or **Safari** for the best experience.
-      </p>
-      <p style={{ fontSize: "14px", opacity: 0.8, lineHeight: "1.5" }}>
-        **To open in your browser:**  
-        🔹 Tap the **three dots** in the top-right corner  
-        🔹 Select **"Open in Browser"**  
-      </p>
+      <div
+        style={{
+          backgroundColor: "white",
+          color: "#333",
+          padding: "20px",
+          borderRadius: "12px",
+          maxWidth: "90%",
+          boxShadow: "0px 4px 10px rgba(0,0,0,0.3)",
+        }}
+      >
+        <h2 style={{ fontSize: "20px", fontWeight: "bold", marginBottom: "10px" }}>
+          ⚠️ Open in Browser for Best Experience!
+        </h2>
+        <p style={{ fontSize: "16px", marginBottom: "15px" }}>
+          📋 **The link has been copied!** Paste it into **Chrome** or **Safari**.
+        </p>
+        <div
+          style={{
+            textAlign: "left",
+            fontSize: "15px",
+            lineHeight: "1.6",
+            fontWeight: "bold",
+            backgroundColor: "#f8f9fa",
+            padding: "10px",
+            borderRadius: "8px",
+          }}
+        >
+          ✅ **How to open in your browser:**  
+          🔹 **Tap the three dots (•••) in the top-right corner**  
+          🔹 Select **"Open in Browser"** 📤  
+        </div>
+      </div>
     </div>
   );
 };

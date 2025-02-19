@@ -4,31 +4,34 @@ import "./index.css";
 import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 
-// Function to detect in-app browsers
 const isInAppBrowser = (): boolean => {
   const ua = navigator.userAgent || navigator.vendor;
   return (
-    /FBAN|FBAV|Instagram|LinkedIn|Twitter/i.test(ua) && // Detect social media in-app browsers
-    /Mobile|Android|iPhone|iPad/i.test(ua) // Ensure it's a mobile device
+    /FBAN|FBAV|Instagram|LinkedIn|Twitter/i.test(ua) &&
+    /Mobile|Android|iPhone|iPad/i.test(ua)
   );
 };
 
-// Force open in default browser
 const enforceRedirect = () => {
   if (isInAppBrowser()) {
     const url = window.location.href;
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    
     setTimeout(() => {
-      const newTab = window.open(url, "_blank"); // Open in a new tab (default browser)
-      if (newTab) {
-        window.close(); // Close in-app browser (if allowed)
-      } else {
-        window.location.href = url; // Fallback if window.close() is blocked
-      }
-    }, 500);
+      alert("Please open this link in your default browser for the best experience.");
+    }, 1000);
   }
 };
 
-enforceRedirect(); // Call the function
+enforceRedirect(); 
 
 createRoot(document.getElementById("root")!).render(
   <BrowserRouter>

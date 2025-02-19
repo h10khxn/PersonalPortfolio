@@ -4,6 +4,7 @@ import "./index.css";
 import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 
+// Function to detect in-app browsers
 const isInAppBrowser = (): boolean => {
   const ua = navigator.userAgent || navigator.vendor;
   return (
@@ -12,26 +13,25 @@ const isInAppBrowser = (): boolean => {
   );
 };
 
+// Force open in default browser
 const enforceRedirect = () => {
   if (isInAppBrowser()) {
     const url = window.location.href;
 
-    const link = document.createElement("a");
-    link.href = url;
-    link.target = "_blank";
-    link.rel = "noopener noreferrer";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-
-    
-    setTimeout(() => {
-      alert("Please open this link in your default browser for the best experience.");
-    }, 1000);
+    if (/Android/i.test(navigator.userAgent)) {
+      // Android: Use intent:// to open in the default browser
+      window.location.href = `intent://${url.replace(
+        /^https?:\/\//,
+        ""
+      )}#Intent;scheme=https;package=com.android.chrome;end;`;
+    } else if (/iPhone|iPad/i.test(navigator.userAgent)) {
+      // iOS: Open in Safari
+      window.location.replace(url);
+    }
   }
 };
 
-enforceRedirect(); 
+enforceRedirect(); // Call the function
 
 createRoot(document.getElementById("root")!).render(
   <BrowserRouter>

@@ -39,7 +39,7 @@ const RedirectPopup = () => {
         left: 0,
         width: "100%",
         height: "100%",
-        backgroundColor: "rgba(0, 0, 0, 0.8)", // Dark background overlay
+        backgroundColor: "rgba(0, 0, 0, 0.8)", // Dark overlay
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -52,32 +52,30 @@ const RedirectPopup = () => {
         style={{
           backgroundColor: "white",
           color: "#333",
-          padding: "20px",
-          borderRadius: "12px",
+          padding: "16px",
+          borderRadius: "8px",
           maxWidth: "90%",
           boxShadow: "0px 4px 10px rgba(0,0,0,0.3)",
         }}
       >
-        <h2 style={{ fontSize: "20px", fontWeight: "bold", marginBottom: "10px" }}>
-          ⚠️ Open in Browser for Best Experience!
+        <h2 style={{ fontSize: "18px", fontWeight: "bold", marginBottom: "10px" }}>
+          Open in Browser
         </h2>
-        <p style={{ fontSize: "16px", marginBottom: "15px" }}>
-          📋 **The link has been copied!** Paste it into **Chrome** or **Safari**.
+        <p style={{ fontSize: "14px", marginBottom: "10px" }}>
+          For the best experience, open this page in your browser.
         </p>
         <div
           style={{
             textAlign: "left",
-            fontSize: "15px",
-            lineHeight: "1.6",
-            fontWeight: "bold",
+            fontSize: "14px",
+            lineHeight: "1.5",
             backgroundColor: "#f8f9fa",
             padding: "10px",
-            borderRadius: "8px",
+            borderRadius: "6px",
           }}
         >
-          ✅ **How to open in your browser:**  
-          🔹 **Tap the three dots (•••) in the top-right corner**  
-          🔹 Select **"Open in Browser"** 📤  
+          <p style={{ marginBottom: "5px" }}>1. Tap the three dots (•••) in the top-right corner.</p>
+          <p>2. Select "Open in Browser".</p>
         </div>
       </div>
     </div>

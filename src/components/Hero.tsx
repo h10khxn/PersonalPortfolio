@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Github, Linkedin, Mail, Terminal, Repeat } from "lucide-react";
-import Card from "./Card"; // Ensure Card component path is correct
 
 
 
@@ -83,10 +82,7 @@ export default function Hero() {
       />
 
 
-      {/* Card component with animated globe */}
-      <div className="absolute top-20 left-10 z-0 pointer-events-none">
-        <Card />
-      </div>
+      
 
       <div className="relative w-full max-w-5xl md:ml-auto z-10 px-4 md:px-0">
         <motion.div className="animate-fade-in" initial="initial" animate="animate">

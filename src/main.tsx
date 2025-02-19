@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 import "./index.css";
@@ -13,28 +14,66 @@ const isInAppBrowser = (): boolean => {
   );
 };
 
-// Force open in default browser
-const enforceRedirect = () => {
-  if (isInAppBrowser()) {
-    const url = window.location.href;
+const RedirectPopup = () => {
+  const [showPopup, setShowPopup] = useState(false);
 
-    if (/Android/i.test(navigator.userAgent)) {
-      // Android: Use intent:// to open in the default browser
-      window.location.href = `intent://${url.replace(
-        /^https?:\/\//,
-        ""
-      )}#Intent;scheme=https;package=com.android.chrome;end;`;
-    } else if (/iPhone|iPad/i.test(navigator.userAgent)) {
-      // iOS: Open in Safari
-      window.location.replace(url);
+  useEffect(() => {
+    if (isInAppBrowser()) {
+      setShowPopup(true);
     }
-  }
-};
+  }, []);
 
-enforceRedirect(); // Call the function
+  const handleRedirect = () => {
+    const url = window.location.href;
+    window.open(url, "_blank");
+  };
+
+  if (!showPopup) return null;
+
+  return (
+    <div
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        backgroundColor: "rgba(0, 0, 0, 0.8)",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column",
+        color: "white",
+        zIndex: 9999,
+        textAlign: "center",
+        padding: "20px",
+      }}
+    >
+      <p style={{ fontSize: "18px", marginBottom: "20px" }}>
+        ⚠️ You're using an in-app browser.  
+        For the best experience, please open this page in your default browser.
+      </p>
+      <button
+        onClick={handleRedirect}
+        style={{
+          padding: "10px 20px",
+          fontSize: "16px",
+          color: "white",
+          backgroundColor: "#007bff",
+          border: "none",
+          borderRadius: "5px",
+          cursor: "pointer",
+        }}
+      >
+        Open in Browser
+      </button>
+    </div>
+  );
+};
 
 createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
+    <RedirectPopup />
     <App />
   </BrowserRouter>
 );

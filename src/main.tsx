@@ -13,14 +13,17 @@ const isInAppBrowser = (): boolean => {
   );
 };
 
-// Force redirect if in an in-app browser
+// Force open in default browser
 const enforceRedirect = () => {
   if (isInAppBrowser()) {
     const url = window.location.href;
     setTimeout(() => {
-      window.location.href = `https://www.google.com/search?q=${encodeURIComponent(
-        url
-      )}`;
+      const newTab = window.open(url, "_blank"); // Open in a new tab (default browser)
+      if (newTab) {
+        window.close(); // Close in-app browser (if allowed)
+      } else {
+        window.location.href = url; // Fallback if window.close() is blocked
+      }
     }, 500);
   }
 };

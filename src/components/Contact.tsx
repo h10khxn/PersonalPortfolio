@@ -1,231 +1,116 @@
-"use client";
-import React, { useState, useEffect } from "react";
-import { Send } from "lucide-react";
-import emailjs from "emailjs-com";
-import { motion } from "framer-motion";
+import React from 'react';
+import { Github, Linkedin, Mail, Clock } from 'lucide-react';
 
-type Direction = "TOP" | "LEFT" | "BOTTOM" | "RIGHT";
-
-export default function Contact() {
-  const [formState, setFormState] = useState({ name: "", email: "", message: "" });
-  const [isSending, setIsSending] = useState(false);
-  const [isSent, setIsSent] = useState(false);
-  const [errors, setErrors] = useState<{ name?: string; email?: string; message?: string }>({});
-
-  const validateForm = () => {
-    const newErrors: { name?: string; email?: string; message?: string } = {};
-
-    // Required field validation
-    if (!formState.name) {
-      newErrors.name = "Name is required.";
-    }
-
-    if (!formState.email) {
-      newErrors.email = "Email is required.";
-    } else if (!/\S+@\S+\.\S+/.test(formState.email)) {
-      newErrors.email = "Email address is invalid.";
-    }
-
-    if (!formState.message) {
-      newErrors.message = "Message is required.";
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0; // return true if no errors
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!validateForm()) {
-      return; // Don't submit the form if there are validation errors
-    }
-
-    setIsSending(true);
-
-    const templateParams = {
-      from_name: formState.name,
-      from_email: formState.email,
-      message: formState.message,
-    };
-
-    emailjs
-      .send("service_yo42mm6", "template_apklrji", templateParams, "eom1943uSKtoTVMXh")
-      .then(() => {
-        setIsSent(true);
-        setFormState({ name: "", email: "", message: "" });
-
-        // Hide the notification after 3 seconds
-        setTimeout(() => setIsSent(false), 3000);
-      })
-      .catch((error) => console.error("Failed to send email:", error))
-      .finally(() => setIsSending(false));
-  };
-
-  // Hover Border Gradient Component
-  const HoverBorderGradient = ({
-    children,
-    containerClassName,
-    className,
-    as: Tag = "button",
-    duration = 1,
-    clockwise = true,
-    ...props
-  }: React.PropsWithChildren<
-    {
-      as?: React.ElementType;
-      containerClassName?: string;
-      className?: string;
-      duration?: number;
-      clockwise?: boolean;
-    } & React.HTMLAttributes<HTMLElement>
-  >) => {
-    const [hovered, setHovered] = useState<boolean>(false);
-    const [direction, setDirection] = useState<Direction>("TOP");
-
-    const rotateDirection = (currentDirection: Direction): Direction => {
-      const directions: Direction[] = ["TOP", "LEFT", "BOTTOM", "RIGHT"];
-      const currentIndex = directions.indexOf(currentDirection);
-      const nextIndex = clockwise
-        ? (currentIndex - 1 + directions.length) % directions.length
-        : (currentIndex + 1) % directions.length;
-      return directions[nextIndex];
-    };
-
-    const movingMap: Record<Direction, string> = {
-      TOP: "radial-gradient(20.7% 50% at 50% 0%, hsl(0, 0%, 100%) 0%, rgba(255, 255, 255, 0) 100%)",
-      LEFT: "radial-gradient(16.6% 43.1% at 0% 50%, hsl(0, 0%, 100%) 0%, rgba(255, 255, 255, 0) 100%)",
-      BOTTOM:
-        "radial-gradient(20.7% 50% at 50% 100%, hsl(0, 0%, 100%) 0%, rgba(255, 255, 255, 0) 100%)",
-      RIGHT:
-        "radial-gradient(16.2% 41.199999999999996% at 100% 50%, hsl(0, 0%, 100%) 0%, rgba(255, 255, 255, 0) 100%)",
-    };
-
-    const highlight =
-      "radial-gradient(75% 181.15942028985506% at 50% 50%, #3275F8 0%, rgba(255, 255, 255, 0) 100%)";
-
-    useEffect(() => {
-      if (!hovered) {
-        const interval = setInterval(() => {
-          setDirection((prevState) => rotateDirection(prevState));
-        }, duration * 1000);
-        return () => clearInterval(interval);
-      }
-    }, [hovered]);
-
-    return (
-      <Tag
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-        className={`relative flex rounded-lg border content-center bg-black/20 hover:bg-black/10 transition duration-300 dark:bg-white/20 items-center justify-center overflow-visible p-px ${containerClassName}`}
-        {...props}
-      >
-        <div className={`w-full text-white z-10 bg-black px-4 py-2 rounded-lg ${className}`}>
-          {children}
+function SocialCard({ 
+  icon: Icon, 
+  title, 
+  description, 
+  link, 
+  color 
+}: { 
+  icon: React.ElementType; 
+  title: string; 
+  description: string; 
+  link: string; 
+  color: string;
+}) {
+  return (
+    <a
+      href={link}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group relative overflow-hidden rounded-xl p-px hover:scale-105 transition-all duration-300"
+      style={{
+        background: `linear-gradient(45deg, ${color}, transparent)`
+      }}
+    >
+      <div className="relative flex h-full flex-col gap-4 rounded-xl bg-gray-900/95 backdrop-blur-sm p-8 transition-all duration-300 group-hover:bg-gray-900/75">
+        <div 
+          className="inline-flex h-12 w-12 items-center justify-center rounded-full transition-transform duration-300 group-hover:scale-110"
+          style={{ backgroundColor: color + '20' }}
+        >
+          <Icon className="h-6 w-6" style={{ color }} />
         </div>
-        <motion.div
-          className="flex-none inset-0 overflow-hidden absolute z-0 rounded-lg"
-          style={{
-            filter: "blur(3px)",
-            position: "absolute",
-            width: "100%",
-            height: "100%",
-          }}
-          initial={{ background: movingMap[direction] }}
-          animate={{
-            background: hovered ? [movingMap[direction], highlight] : movingMap[direction],
-          }}
-          transition={{ ease: "linear", duration: 0.4 }}
-        />
-        <div className="bg-black absolute z-1 flex-none inset-[2px] rounded-lg" />
-      </Tag>
-    );
-  };
+        <div>
+          <h3 className="text-xl font-semibold text-white">{title}</h3>
+          <p className="mt-2 text-gray-400">{description}</p>
+        </div>
+        <div className="flex-1" />
+        <div className="flex items-center gap-2 text-sm font-medium">
+          <span style={{ color }}>Connect</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+            style={{ color }}
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M5 12h14" />
+            <path d="m12 5 7 7-7 7" />
+          </svg>
+        </div>
+      </div>
+    </a>
+  );
+}
+
+function Contact() {
+  const socials = [
+    {
+      icon: Github,
+      title: 'GitHub',
+      description: 'Check out my open source projects and contributions',
+      link: 'https://github.com/h10khxn',
+      color: '#6e5494'
+    },
+    {
+      icon: Linkedin,
+      title: 'LinkedIn',
+      description: 'Connect with me professionally and explore my work experience',
+      link: 'https://www.linkedin.com/in/hamdankhan1704',
+      color: '#0077b5'
+    },
+    {
+      icon: Mail,
+      title: 'Email',
+      description: 'Reach out directly via email',
+      link: 'mailto:hkssocials@gmail.com',
+      color: '#EA4335'
+    }
+  ];
 
   return (
     <section className="py-20 bg-gradient-to-b from-black to-gray-900">
-      <div className="max-w-4xl mx-auto px-4">
-        {/* Gradient Title */}
-        <h2 className="text-5xl font-bold text-center mb-12 animated-gradient-text">
-          And That's It! Thank You For Visiting My Portfolio. What's Next? Get In Touch
-        </h2>
+      <div className="max-w-6xl mx-auto px-4">
+        <div className="text-center mb-16">
+          <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-violet-400 text-transparent bg-clip-text">
+            Let's Connect!
+          </h2>
+          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+            Choose your preferred way to get in touch. Whether you want to discuss a project, 
+            ask a question, or just say hello, I'm always happy to connect!
+          </p>
+        </div>
 
-        {/* Centered Success Notification */}
-        {isSent && (
-          <div className="fixed top-8 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-[#3275F8] to-[#ffffff] text-white px-6 py-3 rounded-lg shadow-lg transition-opacity duration-500 opacity-100 z-50">
-            <p className="font-medium">Message sent successfully!</p>
-          </div>
-        )}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {socials.map((social, index) => (
+            <SocialCard key={index} {...social} />
+          ))}
+        </div>
 
-        {/* Error messages */}
-        {Object.values(errors).length > 0 && (
-          <div className="text-red-500 mb-4">
-            {Object.values(errors).map((error, index) => (
-              <p key={index}>{error}</p>
-            ))}
+        <div className="mt-16 text-center">
+          <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/5 text-gray-400 backdrop-blur-sm">
+            <Clock className="w-5 h-5" />
+            <span>Response time: Usually within 24 hours</span>
           </div>
-        )}
-
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
-                Name
-              </label>
-              <input
-                type="text"
-                id="name"
-                className="w-full px-4 py-3 rounded-lg bg-white/5 border border-gray-700 text-white focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition-colors"
-                value={formState.name}
-                onChange={(e) => setFormState((prev) => ({ ...prev, name: e.target.value }))}
-              />
-            </div>
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                className="w-full px-4 py-3 rounded-lg bg-white/5 border border-gray-700 text-white focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition-colors"
-                value={formState.email}
-                onChange={(e) => setFormState((prev) => ({ ...prev, email: e.target.value }))}
-              />
-            </div>
-          </div>
-          <div>
-            <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
-              Message
-            </label>
-            <textarea
-              id="message"
-              rows={6}
-              className="w-full px-4 py-3 rounded-lg bg-white/5 border border-gray-700 text-white focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition-colors"
-              value={formState.message}
-              onChange={(e) => setFormState((prev) => ({ ...prev, message: e.target.value }))}
-            />
-          </div>
-
-          {/* Hover Border Gradient Button */}
-          <HoverBorderGradient
-            containerClassName="rounded-lg"
-            as="button"
-            className="dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2 px-6 py-2"
-          >
-            {isSending ? (
-              <>
-                <span>Sending...</span>
-                <Send className="w-4 h-4 animate-spin" />
-              </>
-            ) : (
-              <>
-                <span>Send Message</span>
-                <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </>
-            )}
-          </HoverBorderGradient>
-        </form>
+        </div>
       </div>
     </section>
   );
 }
+
+export default Contact;

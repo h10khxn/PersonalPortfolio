@@ -21,7 +21,7 @@ const skills = [
   {
     category: "Cloud & DevOps",
     icon: Cloud,
-    items: ["CI/CD", "Docker", "Version Control (Git)"],
+    items: ["CI/CD", "Docker", "Version Control (Git)" , "Jira"],
   },
   {
     category: "ML & Automation",

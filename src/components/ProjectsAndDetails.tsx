@@ -43,7 +43,7 @@ const projects: Project[] = [
   },
   {
     id: 4,
-    title: "Pokémon Todo List",
+    title: "Pokémon To-do List",
     description: "Developed a visually engaging and interactive Pokémon-themed to-do list application.",
     tech: ["HTML", "CSS", "JavaScript", "UML", "PHP", "MySQL", "React"],
     image: "https://images.unsplash.com/photo-1542779283-429940ce8336?auto=format&fit=crop&q=80&w=800",

@@ -19,8 +19,12 @@ export default function Hero() {
   const [showSuccess, setShowSuccess] = useState(false);
   const [animationComplete, setAnimationComplete] = useState(false);
   const command = "npm install hamdan-khan";
+  const [showVideo, setShowVideo] = useState(false);
+
 
   useEffect(() => {
+    
+    
     if (phase === 0) {
       let index = 0;
       const typingInterval = setInterval(() => {
@@ -47,7 +51,9 @@ export default function Hero() {
       }, 1000);
     }
   }, [phase]);
-
+  useEffect(() => {
+    setShowVideo(true);
+  }, []);
   const rerunAnimation = () => {
     setText("");
     setPhase(0);
@@ -57,12 +63,20 @@ export default function Hero() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden bg-cover bg-center">
+      {/* Background video */}
+      {showVideo && (
+  <video
+    className="absolute inset-0 w-full h-full object-cover z-0"
+    autoPlay
+    muted
+    loop
+    playsInline
+  >
+    <source src="/spacevid2.webm" type="video/webm" />
+    <source src="/spacevid2.mp4" type="video/mp4" />
+  </video>
+)}
 
-      {/* Background Video */}
-      <video className="absolute inset-0 w-full h-full object-cover z-0" autoPlay muted loop playsInline>
-        <source src="/spacevid2.webm" type="video/webm" />
-        <source src="/spacevid2.mp4" type="video/mp4" />
-      </video>
 
 
 

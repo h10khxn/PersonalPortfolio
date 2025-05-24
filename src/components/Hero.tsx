@@ -73,7 +73,7 @@ export default function Hero() {
     playsInline
     preload="auto"
   >
-    <source src="/spacevid2.mp4" type="video/mp4" />
+    <source src="/spacevid-final.mp4" type="video/mp4" />
   </video>
 )}
 

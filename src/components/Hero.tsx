@@ -71,8 +71,8 @@ export default function Hero() {
     muted
     loop
     playsInline
+    preload="auto"
   >
-    <source src="/spacevid2.webm" type="video/webm" />
     <source src="/spacevid2.mp4" type="video/mp4" />
   </video>
 )}

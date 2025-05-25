@@ -66,15 +66,16 @@ export default function Hero() {
       {/* Background video */}
       {showVideo && (
   <video
-    className="absolute inset-0 w-full h-full object-cover z-0"
-    autoPlay
-    muted
-    loop
-    playsInline
-    preload="auto"
-  >
-    <source src="/spacevid-final.mp4" type="video/mp4" />
-  </video>
+  autoPlay
+  muted
+  loop
+  playsInline
+  preload="auto"
+  className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none"
+>
+  <source src="/spacevid-ios-small.mp4" type="video/mp4" />
+</video>
+
 )}
 
 

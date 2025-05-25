@@ -73,6 +73,11 @@ export default function Hero() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden bg-cover bg-center">
       {/* Background video */}
+      <img
+        src="/fallback-blur.jpg"
+        alt="Fallback Background"
+        className="w-full h-full object-cover absolute"
+      />
       {showVideo && (
   <video
   autoPlay

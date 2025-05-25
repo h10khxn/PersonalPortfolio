@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { Github, Linkedin, Mail, Terminal, Repeat } from "lucide-react";
 
@@ -20,6 +20,8 @@ export default function Hero() {
   const [animationComplete, setAnimationComplete] = useState(false);
   const command = "npm install hamdan-khan";
   const [showVideo, setShowVideo] = useState(false);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
 
 
   useEffect(() => {
@@ -54,6 +56,13 @@ export default function Hero() {
   useEffect(() => {
     setShowVideo(true);
   }, []);
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = true; // force mute for iOS autoplay
+      videoRef.current.play().catch(() => {});
+    }
+  }, [showVideo]);
+
   const rerunAnimation = () => {
     setText("");
     setPhase(0);
@@ -68,10 +77,12 @@ export default function Hero() {
   <video
   autoPlay
   muted
+  defaultMuted
   loop
   playsInline
   preload="auto"
   className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none"
+  {...({ defaultMuted: true } as any)}
 >
   <source src="/spacevid-ios-small.mp4" type="video/mp4" />
 </video>

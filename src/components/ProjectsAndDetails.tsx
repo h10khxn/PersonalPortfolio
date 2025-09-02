@@ -68,6 +68,19 @@ const projects: Project[] = [
       live: "https://skycastweathernet.netlify.app/",
     }
   },
+  {
+    id:7 ,
+    title: "Ai Doctor",
+    description: "Built an AI-powered symptom checker that predicts possible diseases based on user-selected symptoms. Trained a fine-tuned DistilBERT model on a symptom-disease dataset for accurate classification. Developed preprocessing, training, and inference pipeline from scratch.",
+    tech: ["Python", "PyTorch", "Transformers (HuggingFace)", "Pandas", "scikit-learn", "Flask", "Hugging Face Datasets"],
+    image: "/DoctorAi.jpg",
+    date: '2025',
+  
+
+
+
+
+  },
 ];
 
 const ProjectCard = ({ project, index, currentIndex, totalProjects, onClick }: { 

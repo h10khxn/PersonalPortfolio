@@ -160,14 +160,6 @@ export default function Skills() {
         `
       }}
     >
-      {/* Top Gradient to Match Section Above */}
-      <motion.div
-        className="absolute top-0 w-full h-32 bg-gradient-to-b from-black to-transparent z-10"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 2 }}
-      />
-
       {/* Animated background mesh */}
       <motion.div 
         className="absolute inset-0"
@@ -340,7 +332,6 @@ export default function Skills() {
                   const Icon = skill.icon;
                   
                   return (
-                    
                     <motion.div
                       key={index}
                       variants={cardVariants}
@@ -493,17 +484,13 @@ export default function Skills() {
             >
               <Sparkles className="w-4 h-4" />
             </motion.div>
+            Hover to explore
           </motion.div>
         </div>
       </div>
       
-      {/* Bottom Gradient Fade */}
-      <motion.div
-        className="absolute bottom-0 w-full h-32 bg-gradient-to-t from-black to-transparent"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 2 }}
-      />
+      {/* Bottom fade */}
+      <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-gray-900 to-transparent pointer-events-none" />
     </div>
   );
 }

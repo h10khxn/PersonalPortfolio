@@ -1,43 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-        <script type="application/ld+json">
+    <!-- ── Performance: preconnect to external origins ─────────────────── -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://images.unsplash.com" />
+
+    <!-- ── Structured Data ─────────────────────────────────────────────── -->
+    <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Hamdan Khan",
-      "url": "https://hamdankhan.netlify.app",
-      "sameAs": [
-        "https://github.com/h10khxn",
-        "https://www.linkedin.com/in/hamdankhan1704"
-      ],
-      "jobTitle": "Software Developer",
-      "description": "Hamdan Khan is a software developer with expertise in web development, AI projects, and problem solving."
-      
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": "https://hamdankhan.netlify.app/#person",
+          "name": "Hamdan Khan",
+          "url": "https://hamdankhan.netlify.app",
+          "image": "https://hamdankhan.netlify.app/logo.jpg",
+          "jobTitle": "Software Engineer",
+          "description": "Hamdan Khan is a Software Engineering student at Ontario Tech University, specializing in web development, AI/ML, and systems design.",
+          "email": "hkssocials@gmail.com",
+          "alumniOf": {
+            "@type": "CollegeOrUniversity",
+            "name": "Ontario Tech University"
+          },
+          "worksFor": {
+            "@type": "Organization",
+            "name": "Hydro One Networks Inc."
+          },
+          "knowsAbout": [
+            "React", "TypeScript", "JavaScript", "Python", "Java", "C++",
+            "Node.js", "Tailwind CSS", "Machine Learning", "Deep Learning",
+            "REST APIs", "MySQL", "Docker", "System Design", "Web Development"
+          ],
+          "sameAs": [
+            "https://github.com/h10khxn",
+            "https://www.linkedin.com/in/hamdankhan1704"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://hamdankhan.netlify.app/#website",
+          "url": "https://hamdankhan.netlify.app",
+          "name": "Hamdan Khan — Software Engineer Portfolio",
+          "description": "Portfolio of Hamdan Khan, Software Engineering student specializing in web development, AI/ML, and systems design.",
+          "publisher": { "@id": "https://hamdankhan.netlify.app/#person" },
+          "inLanguage": "en-CA"
+        }
+      ]
     }
     </script>
 
-    <link rel="icon" type="image/jpeg" href="./public/logo.jpg.jpg" />
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@700&display=swap" rel="stylesheet">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-    <meta name="description" content="Explore Hamdan Khan's portfolio - a Software Engineer specializing in building exceptional websites, automated tools, and applications. Discover projects, certifications, and expertise in Artificial Intelligence, Machine Learning, and cutting-edge technology solutions." />
-    <meta property="og:image" content="https://hamdankhan.netlify.app/public/logo.jpg.jpg" />
-    <meta property="og:image:alt" content="Logo of Hamdan Khan's portfolio" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+
+    <!-- ── Primary SEO ──────────────────────────────────────────────────── -->
+    <title>Hamdan Khan — Software Engineer &amp; Developer | Portfolio</title>
+    <meta name="description" content="Hamdan Khan is a Software Engineering student at Ontario Tech University specializing in React, Python, AI/ML, and systems design. View projects, work experience at Hydro One, and technical skills." />
+    <meta name="author" content="Hamdan Khan" />
+    <meta name="keywords" content="Hamdan Khan, Software Engineer, Web Developer, React, Python, AI, Machine Learning, Portfolio, Ontario Tech University, Hydro One, TypeScript, System Design" />
+    <link rel="canonical" href="https://hamdankhan.netlify.app/" />
+
+    <!-- ── Open Graph (Facebook, iMessage, WhatsApp, LinkedIn) ─────────── -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Hamdan Khan" />
+    <meta property="og:title" content="Hamdan Khan — Software Engineer &amp; Developer" />
+    <meta property="og:description" content="Software Engineering student specializing in web development, AI/ML, and systems design. Based in Ontario, Canada." />
+    <meta property="og:url" content="https://hamdankhan.netlify.app/" />
+    <meta property="og:image" content="https://hamdankhan.netlify.app/logo.jpg" />
+    <meta property="og:image:secure_url" content="https://hamdankhan.netlify.app/logo.jpg" />
+    <meta property="og:image:alt" content="Hamdan Khan — Software Engineer" />
     <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:width" content="400" />
     <meta property="og:image:height" content="400" />
-    <meta property="og:description" content="Explore Hamdan Khan's portfolio - a Software Engineer specializing in building exceptional websites, automated tools, and applications." />
-    <meta property="og:url" content="https://hamdankhan.netlify.app/" />
-    <meta property="og:title" content="Hamdan Khan" />
-    <meta property="og:url" content="https://hamdankhan.netlify.app/" />
-    <meta property="og:title" content="Hamdan Khan" />
+    <meta property="og:locale" content="en_CA" />
+
+    <!-- ── Twitter / X Card ────────────────────────────────────────────── -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Hamdan Khan — Software Engineer &amp; Developer" />
+    <meta name="twitter:description" content="Software Engineering student specializing in web development, AI/ML, and systems design." />
+    <meta name="twitter:image" content="https://hamdankhan.netlify.app/logo.jpg" />
+    <meta name="twitter:image:alt" content="Hamdan Khan — Software Engineer" />
+
+    <!-- ── Favicon ──────────────────────────────────────────────────────── -->
+    <link rel="icon" type="image/jpeg" href="/logo.jpg" />
+
+    <!-- ── Fonts ────────────────────────────────────────────────────────── -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@700&display=swap" rel="stylesheet" />
+
+    <!-- ── Google Search Console ───────────────────────────────────────── -->
     <meta name="google-site-verification" content="s7xYgaRzD0LcC1QYLBfFPlMfoET8qUeOH9kmoQvW7CA" />
-    <title>Hamdan Khan - Portfolio</title>
-    
   </head>
   <body>
     <div id="root"></div>
+
+    <!--
+      noscript fallback: visible to crawlers before JS loads.
+      Gives Google real text content on first parse instead of an empty div.
+    -->
+    <noscript>
+      <h1>Hamdan Khan — Software Engineer &amp; Developer</h1>
+      <p>
+        Hamdan Khan is a Software Engineering student at Ontario Tech University,
+        currently on a co-op placement at Hydro One Networks Inc. as a Protection,
+        Control &amp; Automation Engineering Co-op Student.
+      </p>
+      <p>
+        Skills: React, TypeScript, JavaScript, Python, Java, C/C++, Node.js,
+        Tailwind CSS, MySQL, Docker, Machine Learning, Deep Learning, REST APIs,
+        System Design.
+      </p>
+      <p>
+        Projects include an AI Doctor symptom checker (PyTorch, HuggingFace),
+        AI-controlled car racing game (Reinforcement Learning), a hospital
+        laboratory database system, and a real-time weather app.
+      </p>
+      <p>
+        Contact: <a href="mailto:hkssocials@gmail.com">hkssocials@gmail.com</a> |
+        <a href="https://github.com/h10khxn">GitHub</a> |
+        <a href="https://www.linkedin.com/in/hamdankhan1704">LinkedIn</a>
+      </p>
+    </noscript>
+
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

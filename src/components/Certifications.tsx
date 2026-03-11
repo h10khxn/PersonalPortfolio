@@ -103,7 +103,7 @@ export default function Certifications() {
 
       {/* Animated background glow effects */}
       <motion.div
-        className="absolute top-0 left-1/4 w-96 h-96 bg-violet-500/20 rounded-full filter blur-[100px]"
+        className="absolute top-0 left-1/4 w-96 h-96 bg-teal-500/15 rounded-full filter blur-[100px]"
         animate={{
           x: [0, 100, 0],
           y: [0, 50, 0],
@@ -115,7 +115,7 @@ export default function Certifications() {
         }}
       />
       <motion.div
-        className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full filter blur-[100px]"
+        className="absolute bottom-0 right-1/4 w-96 h-96 bg-indigo-500/15 rounded-full filter blur-[100px]"
         animate={{
           x: [0, -100, 0],
           y: [0, -50, 0],
@@ -156,14 +156,14 @@ export default function Certifications() {
                 ease: "linear"
               }}
             >
-              <Award className="w-10 h-10 text-violet-400" />
+              <Award className="w-10 h-10 text-teal-400" />
             </motion.div>
             <h2 className="text-4xl font-bold text-white tracking-tight">
               CERTIFICATIONS
             </h2>
           </motion.div>
-          <motion.div 
-            className="h-1 w-24 bg-violet-400 mx-auto mt-4 rounded-full"
+          <motion.div
+            className="h-1 w-24 bg-gradient-to-r from-teal-400 to-cyan-400 mx-auto mt-4 rounded-full"
             variants={glowVariants}
             initial="initial"
             animate="animate"
@@ -198,14 +198,14 @@ export default function Certifications() {
                   }}
                 />
                 
-                <div className="relative bg-gradient-to-br from-gray-800/90 to-gray-900/90 p-8 rounded-xl border border-gray-700 hover:border-violet-400/50 transition-all duration-300 h-full flex flex-col backdrop-blur-sm">
+                <div className="relative bg-gradient-to-br from-gray-800/90 to-gray-900/90 p-8 rounded-xl border border-gray-700 hover:border-teal-400/50 transition-all duration-300 h-full flex flex-col backdrop-blur-sm">
                   <motion.div 
                     className="flex-1"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.2 }}
                   >
-                    <h3 className="text-xl font-bold text-white mb-3 group-hover:text-violet-400 transition-colors duration-300">
+                    <h3 className="text-xl font-bold text-white mb-3 group-hover:text-teal-400 transition-colors duration-300">
                       {cert.title}
                     </h3>
                     
@@ -261,7 +261,7 @@ export default function Certifications() {
                     animate={{ scale: 1 }}
                     transition={{ delay: 0.6, type: "spring" }}
                   >
-                    <CheckCircle className="w-5 h-5 text-violet-400" />
+                    <CheckCircle className="w-5 h-5 text-teal-400" />
                   </motion.div>
                 </div>
               </motion.div>

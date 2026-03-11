@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-scroll';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
-import { Menu, X, ChevronRight, Code, Briefcase, Cpu, Award, Mail, Home } from 'lucide-react';
+import { Menu, X, Code, Briefcase, Cpu, Award, Mail, Home, Building2 } from 'lucide-react';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -9,8 +9,8 @@ export default function Header() {
   const [activeSection, setActiveSection] = useState('home');
   const { scrollY } = useScroll();
 
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    const previous = scrollY.getPrevious();
+  useMotionValueEvent(scrollY, 'change', (latest) => {
+    const previous = scrollY.getPrevious() ?? 0;
     if (latest > previous && latest > 150) {
       setHidden(true);
     } else {
@@ -25,14 +25,15 @@ export default function Header() {
     { name: 'Technologies', icon: Code },
     { name: 'Projects', icon: Briefcase },
     { name: 'Skills', icon: Cpu },
+    { name: 'Experience', icon: Building2 },
     { name: 'Certifications', icon: Award },
-    { name: 'Contact', icon: Mail }
+    { name: 'Contact', icon: Mail },
   ];
 
   const slideVariants = {
     hidden: { x: '100%' },
     visible: { x: 0 },
-    exit: { x: '100%' }
+    exit: { x: '100%' },
   };
 
   return (
@@ -43,41 +44,50 @@ export default function Header() {
       transition={{ duration: 0.3 }}
     >
       {/* Animated gradient border */}
-      <div className="h-1 bg-gradient-to-r from-violet-500 via-purple-500 to-pink-500 animate-gradient-x"></div>
+      <div className="h-[3px] bg-gradient-to-r from-teal-400 via-cyan-400 to-emerald-500 animate-gradient-x" />
 
-      {/* Header Box */}
+      {/* Header bar */}
       <motion.div
         className="bg-gray-900/90 backdrop-blur-md shadow-lg border-b border-gray-800"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
-          {/* Logo - Aligned far left */}
+        {/*
+          Layout: logo pinned left (flex-shrink-0), then a flex-1 spacer,
+          then the nav on the right. This keeps the logo in the corner at
+          every viewport width — from 320px phones to 4K TVs.
+        */}
+        <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12 flex items-center h-14 sm:h-16">
+
+          {/* ── Logo — always top-left corner ── */}
           <motion.div
-            className="relative group z-10 mr-auto"
+            className="flex-shrink-0 relative group"
             whileHover={{ scale: 1.05 }}
-            transition={{ type: "spring", stiffness: 400 }}
+            transition={{ type: 'spring', stiffness: 400 }}
           >
             <Link
               to="home"
-              smooth={true}
+              smooth
               duration={500}
-              className="text-2xl font-bold cursor-pointer bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent hover:from-violet-500 hover:to-purple-600 transition-all"
+              className="text-xl sm:text-2xl font-bold cursor-pointer bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent"
               onClick={() => setIsOpen(false)}
             >
               Hamdan Khan
             </Link>
-            <motion.div
-              className="absolute -bottom-1 left-0 w-0 h-0.5 bg-violet-400 group-hover:w-full transition-all duration-300"
-              whileHover={{ width: "100%" }}
-            />
+            <div className="absolute -bottom-0.5 left-0 h-px w-0 bg-teal-400 group-hover:w-full transition-all duration-300" />
           </motion.div>
 
-          {/* Desktop Navigation - Aligned right */}
+          {/* ── Spacer — pushes nav to the right ── */}
+          <div className="flex-1" />
+
+          {/*
+            Desktop nav — only appears at lg (1024px+) so 7 items have
+            enough room and don't squeeze the logo at tablet widths.
+          */}
           <motion.nav
-            className="hidden md:flex space-x-8 ml-auto"
-            initial={{ opacity: 0, y: -20 }}
+            className="hidden lg:flex items-center gap-5 xl:gap-7"
+            initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
@@ -89,46 +99,50 @@ export default function Header() {
               >
                 <Link
                   to={name.toLowerCase()}
-                  smooth={true}
+                  smooth
                   duration={500}
                   offset={-70}
-                  className="text-gray-300 hover:text-violet-400 transition-colors duration-300 flex items-center gap-1.5"
+                  className={`text-sm transition-colors duration-200 flex items-center gap-1.5 whitespace-nowrap ${
+                    activeSection === name.toLowerCase()
+                      ? 'text-teal-400'
+                      : 'text-gray-300 hover:text-teal-400'
+                  }`}
                   onSetActive={() => setActiveSection(name.toLowerCase())}
                 >
-                  <Icon size={16} className="opacity-75" />
+                  <Icon size={14} className="opacity-70 flex-shrink-0" />
                   {name}
                 </Link>
-                <motion.div
-                  className="absolute -bottom-1 left-0 w-0 h-0.5 bg-violet-400 group-hover:w-full transition-all duration-300"
-                  whileHover={{ width: "100%" }}
-                />
+                <div className={`absolute -bottom-0.5 left-0 h-px bg-teal-400 transition-all duration-300 ${
+                  activeSection === name.toLowerCase() ? 'w-full' : 'w-0 group-hover:w-full'
+                }`} />
               </motion.div>
             ))}
           </motion.nav>
 
-          {/* Mobile Menu Button - Aligned far right */}
+          {/* ── Hamburger — shown below lg ── */}
           <motion.button
             onClick={toggleMenu}
-            className="md:hidden relative z-20 p-2 rounded-lg bg-gray-800/50 text-gray-300 ml-auto"
+            className="lg:hidden flex-shrink-0 ml-3 p-2 rounded-lg bg-gray-800/60 text-gray-300"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            aria-label="Toggle menu"
           >
             <AnimatePresence mode="wait">
               <motion.div
-                key={isOpen ? "close" : "menu"}
+                key={isOpen ? 'close' : 'menu'}
                 initial={{ opacity: 0, rotate: -90 }}
                 animate={{ opacity: 1, rotate: 0 }}
                 exit={{ opacity: 0, rotate: 90 }}
-                transition={{ duration: 0.2 }}
+                transition={{ duration: 0.15 }}
               >
-                {isOpen ? <X size={24} /> : <Menu size={24} />}
+                {isOpen ? <X size={22} /> : <Menu size={22} />}
               </motion.div>
             </AnimatePresence>
           </motion.button>
         </div>
       </motion.div>
 
-      {/* Mobile Navigation Menu */}
+      {/* ── Mobile / tablet slide-in panel ── */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -136,37 +150,37 @@ export default function Header() {
             animate="visible"
             exit="exit"
             variants={slideVariants}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="fixed inset-y-0 right-0 w-64 bg-gray-900/95 backdrop-blur-lg shadow-xl border-l border-gray-800 z-30"
+            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+            className="fixed inset-y-0 right-0 w-72 max-w-[85vw] bg-gray-900/97 backdrop-blur-xl shadow-2xl border-l border-gray-800 z-30"
           >
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
-              className="pt-20 px-4 h-full overflow-y-auto"
+              transition={{ delay: 0.15 }}
+              className="pt-20 px-5 h-full overflow-y-auto"
             >
               {navItems.map(({ name, icon: Icon }, index) => (
                 <motion.div
                   key={name}
-                  initial={{ opacity: 0, x: 50 }}
+                  initial={{ opacity: 0, x: 40 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="mb-4"
+                  transition={{ delay: index * 0.07 }}
+                  className="mb-2"
                 >
                   <Link
                     to={name.toLowerCase()}
-                    smooth={true}
+                    smooth
                     duration={500}
                     offset={-70}
                     onClick={toggleMenu}
                     className="block"
                   >
                     <motion.div
-                      whileHover={{ x: 10 }}
-                      className="flex items-center gap-3 text-gray-300 hover:text-violet-400 transition-colors duration-300 p-3 rounded-lg hover:bg-gray-800/50"
+                      whileHover={{ x: 8 }}
+                      className="flex items-center gap-3 text-gray-300 hover:text-teal-400 transition-colors duration-200 p-3 rounded-xl hover:bg-gray-800/60"
                     >
-                      <Icon size={20} className="text-violet-400" />
-                      <span className="font-medium">{name}</span>
+                      <Icon size={18} className="text-teal-400 flex-shrink-0" />
+                      <span className="font-medium text-sm">{name}</span>
                     </motion.div>
                   </Link>
                 </motion.div>
@@ -176,7 +190,7 @@ export default function Header() {
         )}
       </AnimatePresence>
 
-      {/* Overlay for mobile menu */}
+      {/* Overlay */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -184,7 +198,7 @@ export default function Header() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 bg-black/50 z-20"
+            className="fixed inset-0 bg-black/60 z-20 lg:hidden"
             onClick={toggleMenu}
           />
         )}

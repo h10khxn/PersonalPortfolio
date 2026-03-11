@@ -11,10 +11,10 @@ const skills = [
     description: "Crafting responsive, interactive user experiences"
   },
   {
-    category: "Backend Development", 
+    category: "Backend Development",
     icon: Code2,
     color: "from-violet-500 to-purple-400",
-    items: ["Java", "Python", "API's", "PHP", "Node.js"],
+    items: ["Java", "Python", "C / C++", "API's", "PHP", "Node.js", "Embedded Software"],
     description: "Building robust, scalable server-side solutions"
   },
   {
@@ -28,7 +28,7 @@ const skills = [
     category: "Cloud & DevOps",
     icon: Cloud,
     color: "from-orange-500 to-red-400",
-    items: ["CI/CD", "Docker", "Version Control (Git)", "Jira"],
+    items: ["CI/CD", "Docker", "Version Control (Git)", "Jira", "Integration Testing"],
     description: "Automating deployment and infrastructure management"
   },
   {
@@ -52,7 +52,10 @@ const skills = [
     color: "from-indigo-500 to-blue-400",
     items: [
       "Microservices",
-      "Scalability", 
+      "Distributed Systems",
+      "Systems Integration",
+      "Real-time Pipelines",
+      "Scalability",
       "Performance",
       "Architecture",
       "Design Patterns",
@@ -118,7 +121,6 @@ const cardVariants = {
 };
 
 export default function Skills() {
-  const [activeCard, setActiveCard] = useState<number | null>(null);
   const [hoveredTag, setHoveredTag] = useState<string | null>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -148,18 +150,26 @@ export default function Skills() {
   }, [isInView, titleControls, subtitleControls, containerControls]);
 
   return (
-    <div 
+    <div
       ref={sectionRef}
       className="min-h-screen relative overflow-hidden bg-gray-900"
       style={{
         background: `
-          radial-gradient(circle at 20% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
-          radial-gradient(circle at 80% 80%, rgba(168, 85, 247, 0.1) 0%, transparent 50%),
-          radial-gradient(circle at 40% 60%, rgba(14, 165, 233, 0.05) 0%, transparent 50%),
-          linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)
+          radial-gradient(circle at 20% 20%, rgba(20, 184, 166, 0.1) 0%, transparent 50%),
+          radial-gradient(circle at 80% 80%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+          radial-gradient(circle at 40% 60%, rgba(16, 185, 129, 0.06) 0%, transparent 50%),
+          linear-gradient(135deg, #050510 0%, #080820 50%, #050510 100%)
         `
       }}
     >
+      {/* Faint section number */}
+      <div
+        className="absolute -top-4 right-4 sm:right-12 text-[120px] sm:text-[180px] font-black select-none pointer-events-none leading-none z-0"
+        style={{ color: 'rgba(255,255,255,0.018)' }}
+      >
+        02
+      </div>
+
       {/* Top Gradient to Match Section Above */}
       <motion.div
         className="absolute top-0 w-full h-32 bg-gradient-to-b from-black to-transparent z-10"
@@ -173,9 +183,9 @@ export default function Skills() {
         className="absolute inset-0"
         style={{ y, opacity }}
       >
-        <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-gradient-to-r from-blue-400/10 to-violet-400/10 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gradient-to-r from-purple-400/10 to-pink-400/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
-        <div className="absolute top-3/4 left-1/2 w-64 h-64 bg-gradient-to-r from-cyan-400/10 to-blue-400/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '4s' }} />
+        <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-gradient-to-r from-teal-400/10 to-cyan-400/10 rounded-full blur-3xl animate-pulse aurora-1" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gradient-to-r from-indigo-500/10 to-violet-400/10 rounded-full blur-3xl animate-pulse aurora-2" style={{ animationDelay: '2s' }} />
+        <div className="absolute top-3/4 left-1/2 w-64 h-64 bg-gradient-to-r from-emerald-400/10 to-teal-400/10 rounded-full blur-3xl animate-pulse aurora-3" style={{ animationDelay: '4s' }} />
       </motion.div>
 
       <div className="relative z-10 px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24">
@@ -231,8 +241,6 @@ export default function Skills() {
                           scale: 1.02,
                           rotateY: isEven ? 2 : -2,
                         }}
-                        onHoverStart={() => setActiveCard(index)}
-                        onHoverEnd={() => setActiveCard(null)}
                         className="group relative p-8 rounded-3xl backdrop-blur-xl bg-gradient-to-br from-white/5 to-white/10 
                           border border-white/10 hover:border-white/20 transition-all duration-500
                           shadow-xl hover:shadow-2xl hover:shadow-violet-500/20"
@@ -311,170 +319,42 @@ export default function Skills() {
             </motion.div>
           </div>
 
-          {/* Mobile: Horizontal Scrolling Cards */}
+          {/* Mobile: Stacked Cards */}
           <div className="md:hidden">
-            <motion.div
-              variants={subtitleVariants}
-              initial="initial"
-              animate={subtitleControls}
-              className="mb-8"
-            >
-              <div className="flex items-center gap-2 text-gray-400 text-sm mb-4">
-                <Sparkles className="w-4 h-4" />
-                <span>Swipe to explore</span>
-              </div>
-            </motion.div>
-            
             <motion.div
               variants={containerVariants}
               initial="initial"
               animate={containerControls}
-              className="overflow-x-auto pb-6"
-              style={{
-                scrollSnapType: 'x mandatory',
-                WebkitOverflowScrolling: 'touch',
-              }}
+              className="space-y-5"
             >
-              <div className="flex gap-6 w-max px-4">
-                {skills.map((skill, index) => {
-                  const Icon = skill.icon;
-                  
-                  return (
-                    
-                    <motion.div
-                      key={index}
-                      variants={cardVariants}
-                      className="w-80 flex-shrink-0"
-                      style={{ scrollSnapAlign: 'start' }}
-                    >
-                      <motion.div
-                        whileTap={{ scale: 0.98 }}
-                        onTouchStart={() => setActiveCard(index)}
-                        onTouchEnd={() => setActiveCard(null)}
-                        className={`
-                          relative p-6 rounded-2xl backdrop-blur-xl h-full
-                          transition-all duration-500 touch-manipulation
-                          ${activeCard === index
-                            ? 'bg-gradient-to-br from-white/15 to-white/5 border-white/30 shadow-2xl shadow-violet-500/30'
-                            : 'bg-gradient-to-br from-white/10 to-white/5 border-white/10 shadow-xl'
-                          }
-                          border
-                        `}
-                      >
-                        {/* Dynamic background glow */}
-                        <motion.div 
-                          className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${skill.color} transition-opacity duration-500 ${activeCard === index ? 'opacity-20' : 'opacity-0'}`}
-                        />
-                        
-                        <div className="relative z-10">
-                          {/* Header */}
-                          <div className="flex items-center gap-4 mb-6">
-                            <motion.div
-                              animate={{
-                                rotate: activeCard === index ? 360 : 0,
-                                scale: activeCard === index ? 1.1 : 1,
-                              }}
-                              transition={{ duration: 0.6, type: "spring" }}
-                              className={`w-12 h-12 rounded-xl bg-gradient-to-br ${skill.color} p-3 shadow-lg`}
-                            >
-                              <Icon className="w-full h-full text-white" />
-                            </motion.div>
-                            
-                            <div className="flex-1">
-                              <h3 className="text-lg font-bold text-white leading-tight">
-                                {skill.category}
-                              </h3>
-                            </div>
+              {skills.map((skill, index) => {
+                const Icon = skill.icon;
+                return (
+                  <motion.div key={index} variants={cardVariants}>
+                    <div className="relative p-5 rounded-2xl backdrop-blur-xl bg-gradient-to-br from-white/5 to-white/10 border border-white/10 shadow-xl">
+                      <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${skill.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
+                      <div className="relative z-10">
+                        <div className="flex items-center gap-4 mb-4">
+                          <div className={`w-11 h-11 rounded-xl bg-gradient-to-br ${skill.color} p-2.5 shadow-lg flex-shrink-0`}>
+                            <Icon className="w-full h-full text-white" />
                           </div>
-                          
-                          {/* Description */}
-                          <p className="text-gray-400 text-sm mb-6 leading-relaxed">
-                            {skill.description}
-                          </p>
-                          
-                          {/* Skills */}
-                          <div className="space-y-3">
-                            <div className="flex flex-wrap gap-2">
-                              {skill.items.slice(0, 3).map((item, i) => (
-                                <motion.span
-                                  key={i}
-                                  whileTap={{ scale: 0.95 }}
-                                  onTouchStart={() => setHoveredTag(item)}
-                                  onTouchEnd={() => setHoveredTag(null)}
-                                  className={`
-                                    px-3 py-1.5 text-xs font-medium rounded-lg
-                                    transition-all duration-300 touch-manipulation
-                                    ${hoveredTag === item
-                                      ? `bg-gradient-to-r ${skill.color} text-white shadow-md`
-                                      : 'bg-white/10 text-gray-300'
-                                    }
-                                  `}
-                                >
-                                  {item}
-                                </motion.span>
-                              ))}
-                            </div>
-                            
-                            {skill.items.length > 3 && (
-                              <motion.div
-                                animate={{ 
-                                  maxHeight: activeCard === index ? 200 : 0,
-                                  opacity: activeCard === index ? 1 : 0,
-                                }}
-                                transition={{ duration: 0.3 }}
-                                className="overflow-hidden"
-                              >
-                                <div className="flex flex-wrap gap-2 pt-2">
-                                  {skill.items.slice(3).map((item, i) => (
-                                    <motion.span
-                                      key={i}
-                                      initial={{ opacity: 0, y: 10 }}
-                                      animate={{ 
-                                        opacity: activeCard === index ? 1 : 0,
-                                        y: activeCard === index ? 0 : 10,
-                                      }}
-                                      transition={{ delay: i * 0.05 }}
-                                      whileTap={{ scale: 0.95 }}
-                                      className="px-3 py-1.5 text-xs font-medium rounded-lg bg-white/10 text-gray-300 touch-manipulation"
-                                    >
-                                      {item}
-                                    </motion.span>
-                                  ))}
-                                </div>
-                              </motion.div>
-                            )}
+                          <div>
+                            <h3 className="text-base font-bold text-white">{skill.category}</h3>
+                            <p className="text-gray-400 text-xs mt-0.5">{skill.description}</p>
                           </div>
-                          
-                          {skill.items.length > 3 && (
-                            <motion.div 
-                              className="mt-4 text-center"
-                              animate={{ 
-                                opacity: activeCard === index ? 0 : 1,
-                              }}
-                            >
-                              <span className="text-xs text-gray-500">
-                                Tap to see more • {skill.items.length - 3} more skills
-                              </span>
-                            </motion.div>
-                          )}
                         </div>
-                      </motion.div>
-                    </motion.div>
-                  );
-                })}
-              </div>
-              
-              {/* Scroll indicator */}
-              <div className="flex justify-center mt-6 gap-2">
-                {skills.map((_, index) => (
-                  <motion.div
-                    key={index}
-                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                      activeCard === index ? 'bg-violet-400 w-8' : 'bg-gray-600'
-                    }`}
-                  />
-                ))}
-              </div>
+                        <div className="flex flex-wrap gap-2">
+                          {skill.items.map((item, i) => (
+                            <span key={i} className="px-3 py-1 text-xs font-medium rounded-lg bg-white/10 text-gray-300">
+                              {item}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })}
             </motion.div>
           </div>
 

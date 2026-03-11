@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Calendar, ArrowLeft, Globe, Github } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Calendar, ArrowLeft, Globe, Github, Briefcase } from 'lucide-react';
 
 interface Project {
   id: number;
@@ -62,67 +62,53 @@ const projects: Project[] = [
     title: "Weather App",
     description: "Developed a weather app that displays the current weather and forecast for any location around the world. Favorited cities displayed on main page. Used a Rest API to fetch weather data.",
     tech: ["React", "TypeScript", "Tanstack Query", "Tailwind CSS", "OpenWeatherMap Rest API"],
-    image: '/SKYCAST.PNG',
+    image: '/SKYCAST.png',
     date: '2024',
     links: {
       live: "https://skycastweathernet.netlify.app/",
     }
   },
   {
-    id:7 ,
+    id: 7,
     title: "Ai Doctor",
     description: "Built an AI-powered symptom checker that predicts possible diseases based on user-selected symptoms. Trained a fine-tuned DistilBERT model on a symptom-disease dataset for accurate classification. Developed preprocessing, training, and inference pipeline from scratch.",
     tech: ["Python", "PyTorch", "Transformers (HuggingFace)", "Pandas", "scikit-learn", "Flask", "Hugging Face Datasets"],
     image: "/DoctorAi.jpg",
     date: '2025',
-  
-
-
-
-
   },
 ];
 
-const ProjectCard = ({ project, index, currentIndex, totalProjects, onClick }: { 
+// ─── Project Card ────────────────────────────────────────────────────────────
+
+const ProjectCard = ({ project, index, currentIndex, totalProjects, onClick }: {
   project: Project;
   index: number;
   currentIndex: number;
   totalProjects: number;
   onClick: () => void;
 }) => {
-  const calculatePosition = (idx: number, current: number, total: number) => {
-    const diff = idx - current;
-    if (diff === 0) return 0;
-    if (diff > total / 2) return diff - total;
-    if (diff < -total / 2) return diff + total;
-    return diff;
-  };
+  const diff = (() => {
+    const d = index - currentIndex;
+    if (d > totalProjects / 2) return d - totalProjects;
+    if (d < -totalProjects / 2) return d + totalProjects;
+    return d;
+  })();
 
-  const position = calculatePosition(index, currentIndex, totalProjects);
-  const isActive = position === 0;
-  const xOffset = position * 60;
-  const scale = 0.85 - Math.abs(position) * 0.2;
-  const opacity = 1 - Math.abs(position) * 0.3;
-  const zIndex = isActive ? 1 : 0;
+  const isActive = diff === 0;
+  const xOffset = diff * 60;
+  const scale = Math.max(0.4, 0.85 - Math.abs(diff) * 0.2);
+  const opacity = Math.max(0, 1 - Math.abs(diff) * 0.35);
 
   return (
     <motion.div
-      className="absolute top-0 left-0 w-full h-full"
-      style={{ zIndex }}
+      className="absolute inset-0 flex items-center justify-center"
+      style={{ zIndex: isActive ? 10 : Math.max(0, 5 - Math.abs(diff)) }}
       initial={false}
-      animate={{
-        x: `${xOffset}%`,
-        scale,
-        opacity,
-      }}
-      transition={{
-        type: "spring",
-        stiffness: 300,
-        damping: 30,
-      }}
+      animate={{ x: `${xOffset}%`, scale, opacity }}
+      transition={{ type: 'tween', duration: 0.28, ease: [0.25, 0.46, 0.45, 0.94] }}
     >
       <motion.div
-        className="w-[85%] h-[85%] rounded-2xl overflow-hidden cursor-pointer bg-gray-800/50 backdrop-blur-xl group"
+        className="w-[85%] h-[85%] rounded-2xl overflow-hidden cursor-pointer bg-gray-800/50 backdrop-blur-xl group border border-white/8"
         onClick={onClick}
         whileHover={isActive ? { scale: 1.02 } : {}}
       >
@@ -133,34 +119,30 @@ const ProjectCard = ({ project, index, currentIndex, totalProjects, onClick }: {
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
-          <div className="absolute inset-0 p-6 flex flex-col justify-end transform transition-transform duration-300">
-            <div className="flex items-center gap-2 text-violet-300 mb-2">
-              <Calendar className="w-4 h-4" />
-              <span className="text-sm">{project.date}</span>
+          <div className="absolute inset-0 p-5 sm:p-6 flex flex-col justify-end">
+            <div className="flex items-center gap-2 text-teal-400 mb-2">
+              <Calendar className="w-3.5 h-3.5" />
+              <span className="text-xs sm:text-sm">{project.date}</span>
             </div>
-            <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-violet-300 transition-colors">
+            <h3 className="text-lg sm:text-2xl font-bold text-white mb-2 group-hover:text-teal-300 transition-colors leading-tight">
               {project.title}
             </h3>
-            <p className="text-gray-300 mb-4 line-clamp-2 group-hover:text-white transition-colors">
+            <p className="text-gray-300 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 group-hover:text-white transition-colors">
               {project.description}
             </p>
-            <div className="flex flex-wrap gap-2">
-              {project.tech.slice(0, 3).map((tech, index) => (
-                <motion.span
-                  key={index}
-                  className="px-3 py-1 text-sm rounded-full bg-violet-500/20 text-violet-300 backdrop-blur-sm border border-violet-500/20"
-                  whileHover={{ scale: 1.05 }}
+            <div className="flex flex-wrap gap-1.5 sm:gap-2">
+              {project.tech.slice(0, 3).map((tech, i) => (
+                <span
+                  key={i}
+                  className="px-2.5 py-1 text-xs rounded-full bg-teal-500/15 text-teal-300 border border-teal-500/20"
                 >
                   {tech}
-                </motion.span>
+                </span>
               ))}
               {project.tech.length > 3 && (
-                <motion.span
-                  className="px-3 py-1 text-sm rounded-full bg-violet-500/20 text-violet-300 backdrop-blur-sm border border-violet-500/20"
-                  whileHover={{ scale: 1.05 }}
-                >
+                <span className="px-2.5 py-1 text-xs rounded-full bg-teal-500/15 text-teal-300 border border-teal-500/20">
                   +{project.tech.length - 3}
-                </motion.span>
+                </span>
               )}
             </div>
           </div>
@@ -170,41 +152,18 @@ const ProjectCard = ({ project, index, currentIndex, totalProjects, onClick }: {
   );
 };
 
-const NavigationButton = ({ direction, onClick }: { 
-  direction: 'left' | 'right';
-  onClick: () => void;
-}) => (
-  <div 
-    className={`absolute top-1/2 -translate-y-1/2 z-30 ${
-      direction === 'left' ? 'left-4' : 'right-4'
-    }`}
-  >
-    <motion.button
-      onClick={(e) => {
-        e.stopPropagation();
-        onClick();
-      }}
-      className="p-4 rounded-full bg-white/10 backdrop-blur-md text-white border border-white/20 shadow-lg w-12 h-12 flex items-center justify-center"
-      whileHover={{ backgroundColor: 'rgba(255, 255, 255, 0.2)' }}
-      whileTap={{ scale: 1 }}
-      initial={false}
-    >
-      {direction === 'left' ? <ChevronLeft className="w-6 h-6" /> : <ChevronRight className="w-6 h-6" />}
-    </motion.button>
-  </div>
-);
+// ─── Main Component ──────────────────────────────────────────────────────────
 
 export default function ProjectsAndDetails() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [project, setProject] = useState<Project | undefined>(undefined);
   const [autoAdvance, setAutoAdvance] = useState(true);
 
   useEffect(() => {
     if (id) {
-      const selectedProject = projects.find((p) => p.id.toString() === id);
-      setProject(selectedProject);
+      setProject(projects.find((p) => p.id.toString() === id));
       setAutoAdvance(false);
     } else {
       setProject(undefined);
@@ -213,142 +172,223 @@ export default function ProjectsAndDetails() {
   }, [id]);
 
   useEffect(() => {
-    let timer: NodeJS.Timeout;
-    if (autoAdvance && !project) {
-      timer = setInterval(() => {
-        setCurrentIndex((prev) => (prev + 1) % projects.length);
-      }, 5000);
-    }
+    if (!autoAdvance || project) return;
+    const timer = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % projects.length);
+    }, 5000);
     return () => clearInterval(timer);
   }, [autoAdvance, project]);
 
-  const handleNavigation = (direction: 'next' | 'prev') => {
-    setCurrentIndex((prevIndex) =>
-      direction === 'next'
-        ? (prevIndex + 1) % projects.length
-        : (prevIndex - 1 + projects.length) % projects.length
+  const go = (dir: 'next' | 'prev') => {
+    setAutoAdvance(false);
+    setCurrentIndex((prev) =>
+      dir === 'next'
+        ? (prev + 1) % projects.length
+        : (prev - 1 + projects.length) % projects.length
     );
   };
 
-  if (!project) {
+  // ── Detail view ────────────────────────────────────────────────────────────
+  if (project) {
     return (
       <motion.section
-        className="h-screen overflow-hidden bg-black flex flex-col"
+        className="min-h-screen overflow-y-auto bg-black"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
       >
-        <div className="flex-1 flex flex-col items-center justify-center px-4">
-          <motion.h2 className="text-5xl font-bold text-white mb-8 text-center">
-            FEATURED PROJECTS
-          </motion.h2>
-          <div className="relative w-full h-full flex items-center justify-between">
-            <NavigationButton direction="left" onClick={() => handleNavigation('prev')} />
-            <NavigationButton direction="right" onClick={() => handleNavigation('next')} />
-            <div className="relative w-full max-w-4xl mx-auto h-full">
-              <AnimatePresence>
-                {projects.map((project, index) => (
-                  <ProjectCard
-                    key={project.id}
-                    project={project}
-                    index={index}
-                    currentIndex={currentIndex}
-                    totalProjects={projects.length}
-                    onClick={() => navigate(`/project/${project.id}`)}
-                  />
-                ))}
-              </AnimatePresence>
+        <div className="max-w-4xl mx-auto px-4 py-20">
+          <motion.button
+            onClick={() => navigate('/')}
+            className="flex items-center gap-2 text-teal-400 mb-8 group"
+            whileHover={{ x: -4 }}
+          >
+            <ArrowLeft className="w-5 h-5" />
+            <span className="group-hover:underline text-sm">Back to Projects</span>
+          </motion.button>
+
+          <motion.div
+            className="bg-gray-900/60 backdrop-blur-xl rounded-2xl overflow-hidden shadow-2xl border border-white/10"
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.2 }}
+          >
+            <div className="relative aspect-video group overflow-hidden rounded-t-2xl">
+              <img
+                src={project.image}
+                alt={project.title}
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent" />
             </div>
-          </div>
+
+            <div className="p-6 sm:p-8">
+              <div className="flex items-center gap-2 text-teal-400 mb-4">
+                <Calendar className="w-4 h-4" />
+                <span className="text-sm">{project.date}</span>
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-cyan-300 mb-4">
+                {project.title}
+              </h2>
+              <p className="text-gray-300 mb-8 leading-relaxed">{project.description}</p>
+
+              <div className="flex flex-wrap gap-2 mb-8">
+                {project.tech.map((tech, i) => (
+                  <motion.span
+                    key={i}
+                    className="px-3 py-1 text-sm bg-teal-500/15 text-teal-300 rounded-full border border-teal-500/20"
+                    whileHover={{ scale: 1.05 }}
+                  >
+                    {tech}
+                  </motion.span>
+                ))}
+              </div>
+
+              {project.links && (
+                <div className="flex gap-3 flex-wrap">
+                  {project.links.live && (
+                    <motion.a
+                      href={project.links.live}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 px-4 py-2 bg-teal-500/15 text-teal-300 rounded-lg border border-teal-500/20 hover:bg-teal-500/25 transition-colors text-sm"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <Globe className="w-4 h-4" />
+                      Live Demo
+                    </motion.a>
+                  )}
+                  {project.links.github && (
+                    <motion.a
+                      href={project.links.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 px-4 py-2 bg-teal-500/15 text-teal-300 rounded-lg border border-teal-500/20 hover:bg-teal-500/25 transition-colors text-sm"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <Github className="w-4 h-4" />
+                      View Code
+                    </motion.a>
+                  )}
+                </div>
+              )}
+            </div>
+          </motion.div>
         </div>
       </motion.section>
     );
   }
 
+  // ── Carousel view ──────────────────────────────────────────────────────────
   return (
-    <motion.section 
-      className="min-h-screen overflow-y-auto bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-violet-900/20 via-gray-900 to-black"
+    <motion.section
+      className="relative overflow-hidden bg-black"
+      style={{ background: 'linear-gradient(160deg, #050510 0%, #080820 50%, #050510 100%)' }}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      <div className="max-w-4xl mx-auto px-4 py-20">
-        <motion.button
-          onClick={() => navigate('/')}
-          className="flex items-center gap-2 text-violet-300 mb-8 group"
-          whileHover={{ x: -4 }}
-        >
-          <ArrowLeft className="w-5 h-5" />
-          <span className="group-hover:underline">Back to Projects</span>
-        </motion.button>
-        <motion.div
-          className="bg-gray-800/50 backdrop-blur-xl rounded-2xl overflow-hidden shadow-2xl border border-white/10"
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.2 }}
-        >
-          <div className="relative aspect-video group">
-            <img 
-              src={project.image} 
-              alt={project.title} 
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent" />
-          </div>
-          <div className="p-8">
-            <div className="flex items-center gap-2 text-violet-300 mb-4">
-              <Calendar className="w-4 h-4" />
-              <span className="text-sm">{project.date}</span>
+      {/* Aurora orbs */}
+      <div className="absolute top-1/4 right-1/4 w-[500px] h-[500px] rounded-full blur-[130px] pointer-events-none aurora-1"
+        style={{ background: 'radial-gradient(circle, rgba(6,182,212,0.09) 0%, transparent 70%)' }} />
+      <div className="absolute bottom-1/3 left-1/4 w-[400px] h-[400px] rounded-full blur-[110px] pointer-events-none aurora-2"
+        style={{ background: 'radial-gradient(circle, rgba(20,184,166,0.08) 0%, transparent 70%)' }} />
+
+      {/* Top / bottom fades */}
+      <div className="absolute top-0 w-full h-32 bg-gradient-to-b from-black to-transparent z-10 pointer-events-none" />
+      <div className="absolute bottom-0 w-full h-32 bg-gradient-to-t from-black to-transparent z-10 pointer-events-none" />
+
+      <div className="relative z-20 px-4 sm:px-6 lg:px-8 py-20 sm:py-24">
+        <div className="max-w-5xl mx-auto flex flex-col items-center">
+
+          {/* Section header */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: [0.215, 0.61, 0.355, 1] }}
+            className="text-center mb-14"
+          >
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <Briefcase className="w-7 h-7 text-teal-400" />
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-cyan-300 to-teal-500">
+                PROJECTS
+              </h2>
             </div>
-            <h2 className="text-4xl font-bold text-white mb-4 bg-clip-text text-transparent bg-gradient-to-r from-violet-400 to-violet-200">
-              {project.title}
-            </h2>
-            <p className="text-gray-300 mb-8 leading-relaxed">
-              {project.description}
+            <div className="h-px w-24 mx-auto rounded-full bg-gradient-to-r from-teal-400 to-cyan-400 mb-5" />
+            <p className="text-gray-500 text-base max-w-xl mx-auto">
+              A selection of things I've built, Click any card to learn more
             </p>
-            <div className="flex flex-wrap gap-2 mb-8">
-              {project.tech.map((tech, i) => (
-                <motion.span
+          </motion.div>
+
+          {/* ── Carousel ── */}
+          {/*
+            Arrows are INSIDE this container so top-1/2 is relative
+            to the carousel box, not the full section.
+          */}
+          <div className="relative w-full" style={{ height: 'clamp(320px, 55vh, 520px)' }}>
+
+            {/* Left arrow — outer div owns position, inner button owns animation */}
+            <div className="absolute left-0 sm:left-2 top-1/2 -translate-y-1/2 z-30">
+              <motion.button
+                onClick={() => go('prev')}
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/50 backdrop-blur-md border border-white/15 text-white flex items-center justify-center hover:bg-teal-500/20 hover:border-teal-500/40 transition-all duration-200 shadow-lg"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.92 }}
+              >
+                <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+              </motion.button>
+            </div>
+
+            {/* Right arrow */}
+            <div className="absolute right-0 sm:right-2 top-1/2 -translate-y-1/2 z-30">
+              <motion.button
+                onClick={() => go('next')}
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/50 backdrop-blur-md border border-white/15 text-white flex items-center justify-center hover:bg-teal-500/20 hover:border-teal-500/40 transition-all duration-200 shadow-lg"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.92 }}
+              >
+                <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
+              </motion.button>
+            </div>
+
+            {/* Cards */}
+            <AnimatePresence initial={false}>
+              {projects.map((p, i) => (
+                <ProjectCard
+                  key={p.id}
+                  project={p}
+                  index={i}
+                  currentIndex={currentIndex}
+                  totalProjects={projects.length}
+                  onClick={() => navigate(`/project/${p.id}`)}
+                />
+              ))}
+            </AnimatePresence>
+          </div>
+
+          {/* Counter + dots */}
+          <div className="flex flex-col items-center gap-2 mt-6">
+            <span className="text-gray-600 text-xs font-mono tracking-widest">
+              {String(currentIndex + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}
+            </span>
+            <div className="flex items-center gap-2">
+              {projects.map((_, i) => (
+                <button
                   key={i}
-                  className="px-3 py-1 text-sm bg-violet-500/20 text-violet-300 rounded-full backdrop-blur-sm border border-violet-500/20"
-                  whileHover={{ scale: 1.05 }}
-                >
-                  {tech}
-                </motion.span>
+                  onClick={() => { setAutoAdvance(false); setCurrentIndex(i); }}
+                  className={`h-1.5 rounded-full transition-all duration-300 ${
+                    i === currentIndex
+                      ? 'w-6 bg-teal-400'
+                      : 'w-1.5 bg-white/25 hover:bg-white/50'
+                  }`}
+                />
               ))}
             </div>
-            {project.links && (
-              <div className="flex gap-4">
-                {project.links.live && (
-                  <motion.a
-                    href={project.links.live}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-4 py-2 bg-violet-500/20 text-violet-300 rounded-lg backdrop-blur-sm border border-violet-500/20 hover:bg-violet-500/30 transition-colors"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <Globe className="w-5 h-5" />
-                    <span>Live Demo</span>
-                  </motion.a>
-                )}
-                {project.links.github && (
-                  <motion.a
-                    href={project.links.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-4 py-2 bg-violet-500/20 text-violet-300 rounded-lg backdrop-blur-sm border border-violet-500/20 hover:bg-violet-500/30 transition-colors"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <Github className="w-5 h-5" />
-                    <span>View Code</span>
-                  </motion.a>
-                )}
-              </div>
-            )}
           </div>
-        </motion.div>
+
+        </div>
       </div>
     </motion.section>
   );

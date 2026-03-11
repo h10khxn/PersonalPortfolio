@@ -6,6 +6,7 @@ import TechWheel from './components/TechWheel';
 import Header from './components/Header';
 import Certifications from './components/Certifications';
 import Footer from './components/Footer';
+import Experience from './components/Experience';
 import ProjectsAndDetails from './components/ProjectsAndDetails';
 import { Route, Routes } from 'react-router-dom';
 
@@ -27,7 +28,9 @@ export default function App() {
       <section id="technologies" className="py-0">
         <TechWheel />
       </section>
-
+      <section id="experience" className="py-0">
+        <Experience />
+      </section>
       <section id="projects" className="py-0">
         <Routes>
           <Route path="/" element={<ProjectsAndDetails />} />

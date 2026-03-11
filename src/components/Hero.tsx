@@ -220,7 +220,7 @@ export default function Hero() {
                 transition={{ duration: 0.7 }}
               >
                 <h2 className="text-lg sm:text-xl lg:text-2xl text-white font-semibold tracking-wide">
-                  Systems Engineering Intern
+                  Protection, Control & Automation Engineering Intern
                 </h2>
                 <p className="text-base sm:text-lg font-mono mt-1 text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-cyan-400 drop-shadow-[0_0_8px_rgba(20,184,166,0.5)]">
                   @ Hydro One Networks

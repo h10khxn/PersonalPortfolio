@@ -9,7 +9,7 @@ const experiences = [
   {
     id: 'hydro-one',
     company: 'Hydro One Networks Inc.',
-    role: 'Protection, Control & Automation Engineering Co-op Student',
+    role: 'Protection, Control & Automation Engineering',
     type: 'Co-op',
     period: 'Sep 2025 – Aug 2026',
     duration: '1 Year',

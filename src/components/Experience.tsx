@@ -22,7 +22,7 @@ const experiences = [
     accentGlow: 'rgba(245,158,11,0.18)',
     groups: [
       {
-        name: 'Integration Testing',
+        name: 'QA Testing',
         icon: Activity,
         iconBg: 'bg-amber-500/15',
         iconText: 'text-amber-400',
@@ -58,16 +58,74 @@ const experiences = [
       },
     ],
     stack: [
-      'Python',
-      'C / C++',
       'Distributed Systems',
       'Systems Integration',
       'Real-time Pipelines',
       'Integration Testing',
+      'Regression Testing',
       'Embedded Software',
     ],
   },
   // ── Add future roles below this line ─────────────────────────────────────
+  {
+    id: 'wouessi-digital',
+    company: 'Wouessi Digital',
+    role: 'Software Engineer',
+    type: 'Contract',
+    period: 'Mar 2025 – Apr 2025',
+    duration: '2 Months',
+    location: 'Ontario, Canada',
+    current: false,
+    dotColor: '#14b8a6',
+    accentText: 'text-teal-400',
+    accentBg: 'bg-teal-500/10',
+    accentBorder: 'border-teal-500/20',
+    accentGlow: 'rgba(20,184,166,0.18)',
+    groups: [
+      {
+        name: 'Backend Development',
+        icon: Activity,
+        iconBg: 'bg-teal-500/15',
+        iconText: 'text-teal-400',
+        bullet: 'bg-teal-400',
+        items: [
+          'Built a TypeScript/Node.js backend service to extract, normalize, and process 7,000+ federal IT procurement contracts for competitive benchmarking and spend analysis.',
+          'Designed and implemented REST APIs to expose structured contract data to downstream analytics pipelines and internal dashboard integrations.',
+          'Optimized document parsing and metadata filtering logic to ensure accurate, scalable insight generation across large procurement datasets.',
+        ],
+      },
+      {
+        name: 'CI/CD & Infrastructure',
+        icon: Zap,
+        iconBg: 'bg-cyan-500/15',
+        iconText: 'text-cyan-400',
+        bullet: 'bg-cyan-400',
+        items: [
+          'Engineered a Jenkins CI/CD pipeline to automate dependency installation, linting, unit testing, Docker image builds, and Kubernetes deployments.',
+          'Containerized the backend service using Docker and configured Kubernetes manifests for reliable, repeatable deployment across environments.',
+        ],
+      },
+      {
+        name: 'Data Processing',
+        icon: Shield,
+        iconBg: 'bg-indigo-500/15',
+        iconText: 'text-indigo-400',
+        bullet: 'bg-indigo-400',
+        items: [
+          'Designed parsing and filtering pipelines to clean and structure raw contract metadata, enabling consistent downstream consumption by reporting tools.',
+          'Ensured data integrity and traceability across ingestion, transformation, and API exposure layers to support reliable benchmarking outputs.',
+        ],
+      },
+    ],
+    stack: [
+      'TypeScript',
+      'Node.js',
+      'REST APIs',
+      'Jenkins',
+      'Docker',
+      'Kubernetes',
+    ],
+  }
 ];
 
 // ─── Component ─────────────────────────────────────────────────────────────────
@@ -124,11 +182,11 @@ export default function Experience() {
           {/* ── Timeline ───────────────────────────────────────────────────── */}
           <div className="relative">
 
-            {/* Vertical line — only visible when there are multiple entries */}
+            {/* Full-height connector line */}
             {experiences.length > 1 && (
               <div
-                className="absolute left-5 sm:left-6 top-6 bottom-6 w-px"
-                style={{ background: 'linear-gradient(to bottom, rgba(245,158,11,0.6) 0%, rgba(245,158,11,0.1) 100%)' }}
+                className="absolute left-[7px] sm:left-[7px] top-4 bottom-4 w-px"
+                style={{ background: 'linear-gradient(to bottom, rgba(245,158,11,0.5) 0%, rgba(20,184,166,0.5) 100%)' }}
               />
             )}
 
@@ -141,7 +199,6 @@ export default function Experience() {
                     exp={exp}
                     isInView={isInView}
                     delay={delay}
-                    isLast={expIndex === experiences.length - 1}
                   />
                 );
               })}
@@ -163,12 +220,10 @@ function TimelineEntry({
   exp,
   isInView,
   delay,
-  isLast,
 }: {
   exp: typeof experiences[0];
   isInView: boolean;
   delay: number;
-  isLast: boolean;
 }) {
   return (
     <motion.div
@@ -196,13 +251,6 @@ function TimelineEntry({
           />
         </div>
 
-        {/* Line below (connect to next entry) */}
-        {!isLast && (
-          <div
-            className="w-px flex-1 mt-3 min-h-[2rem]"
-            style={{ background: `linear-gradient(to bottom, ${exp.dotColor}60, transparent)` }}
-          />
-        )}
       </div>
 
       {/* ── Right: card ── */}

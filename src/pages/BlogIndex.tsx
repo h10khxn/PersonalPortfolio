@@ -18,7 +18,7 @@ export default function BlogIndex() {
           className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-gray-300 transition-colors mb-14 group"
         >
           <ArrowLeft size={14} className="group-hover:-translate-x-0.5 transition-transform" />
-          hamdankhan.netlify.app
+          hamdankhan.dev
         </Link>
 
         {/* Header */}

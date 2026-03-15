@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://hamdankhan.netlify.app/sitemap.xml
+Sitemap: https://hamdankhan.dev/sitemap.xml

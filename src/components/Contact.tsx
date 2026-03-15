@@ -1,5 +1,6 @@
 import React from 'react';
-import { Github, Linkedin, Mail, Clock, ArrowUpRight } from 'lucide-react';
+import { Github, Linkedin, Mail, Clock, ArrowUpRight, BookOpen } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 export default function Contact() {
@@ -89,6 +90,37 @@ export default function Contact() {
 
         {/* Divider */}
         <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-800 to-transparent my-12" />
+
+        {/* Blog CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mb-12"
+        >
+          <Link
+            to="/blog"
+            className="group relative flex flex-col sm:flex-row items-center justify-between gap-5 p-7 rounded-2xl border border-violet-500/20 hover:border-violet-400/40 bg-violet-500/5 hover:bg-violet-500/8 transition-all duration-300"
+          >
+            <div className="flex items-center gap-4 text-left">
+              <div className="w-11 h-11 rounded-xl bg-violet-500/15 flex items-center justify-center flex-shrink-0">
+                <BookOpen className="w-5 h-5 text-violet-400" />
+              </div>
+              <div>
+                <p className="text-white font-bold text-lg leading-snug">Read my writing</p>
+                <p className="text-gray-500 text-sm mt-0.5">Notes on engineering, systems, and things I've built.</p>
+              </div>
+            </div>
+            <span className="flex items-center gap-2 text-sm font-semibold text-violet-400 group-hover:text-violet-300 transition-colors whitespace-nowrap">
+              Visit the blog
+              <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            </span>
+          </Link>
+        </motion.div>
+
+        {/* Divider */}
+        <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-800 to-transparent mb-12" />
 
         {/* ── Social cards ── */}
         <motion.div

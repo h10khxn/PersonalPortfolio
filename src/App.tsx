@@ -1,55 +1,15 @@
-import React from 'react';
-import Hero from './components/Hero';
-import Skills from './components/Skills';
-import Contact from './components/Contact';
-import TechWheel from './components/TechWheel';
-import Header from './components/Header';
-import Certifications from './components/Certifications';
-import Footer from './components/Footer';
-import Experience from './components/Experience';
-import ProjectsAndDetails from './components/ProjectsAndDetails';
 import { Route, Routes } from 'react-router-dom';
+import BlogIndex from './pages/BlogIndex';
+import BlogPost from './pages/BlogPost';
+import Portfolio from './pages/Portfolio';
 
 export default function App() {
   return (
-    <div className="min-h-screen text-white"> {/* Removed gradient classes */}
-      {/* Header */}
-      <Header />
-
-      {/* Sections */}
-      <section id="home" className="pt-0">
-        <Hero />
-      </section>
-      <section id="skills" className="py-0">
-        <Skills />
-      </section>
-
-
-      <section id="technologies" className="py-0">
-        <TechWheel />
-      </section>
-      <section id="experience" className="py-0">
-        <Experience />
-      </section>
-      <section id="projects" className="py-0">
-        <Routes>
-          <Route path="/" element={<ProjectsAndDetails />} />
-          <Route path="/project/:id" element={<ProjectsAndDetails />} />
-        </Routes>
-      </section>
-
-
-      <section id="certifications" className="py-0">
-        <Certifications />
-      </section>
-
-      <section id="contact" className="py-0">
-        <Contact />
-      </section>
-
-      <section id="footer" className="py-0">
-        <Footer />
-      </section>
-    </div>
+    <Routes>
+      <Route path="/" element={<Portfolio />} />
+      <Route path="/project/:id" element={<Portfolio />} />
+      <Route path="/blog" element={<BlogIndex />} />
+      <Route path="/blog/:slug" element={<BlogPost />} />
+    </Routes>
   );
 }

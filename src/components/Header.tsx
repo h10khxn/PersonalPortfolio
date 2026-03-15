@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-scroll';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
-import { Menu, X, Code, Briefcase, Cpu, Award, Mail, Home, Building2 } from 'lucide-react';
+import { Menu, X, Code, Briefcase, Cpu, Award, Mail, Home, Building2, Activity } from 'lucide-react';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,6 +26,7 @@ export default function Header() {
     { name: 'Projects', icon: Briefcase },
     { name: 'Skills', icon: Cpu },
     { name: 'Experience', icon: Building2 },
+    { name: 'Activity', icon: Activity },
     { name: 'Certifications', icon: Award },
     { name: 'Contact', icon: Mail },
   ];

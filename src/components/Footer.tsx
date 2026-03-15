@@ -1,4 +1,4 @@
-import { Github, Linkedin, Mail } from "lucide-react";
+import { Github, Linkedin, Mail, BookOpen } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -15,6 +15,9 @@ export default function Footer() {
           </a>
           <a href="mailto:hamdan.khan@ontariotechu.net" className="gradient-icon transition-transform transform hover:scale-125">
             <Mail className="w-8 h-8" />
+          </a>
+          <a href="/blog" className="gradient-icon transition-transform transform hover:scale-125">
+            <BookOpen className="w-8 h-8" />
           </a>
         </div>
 

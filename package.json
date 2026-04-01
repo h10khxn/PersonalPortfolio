@@ -23,7 +23,7 @@
     "react-router-dom": "^6.27.0",
     "react-scroll": "^1.9.0",
     "styled-components": "^6.1.13",
-    "swiper": "^11.1.15",
+    "swiper": "^12.1.2",
     "tailwind-merge": "^2.5.5",
     "vite-plugin-compression": "^0.5.1"
   },

@@ -84,7 +84,7 @@ function parseEvents(events: GitHubEvent[]): FeedItem[] {
   const items: FeedItem[] = [];
 
   for (const ev of events) {
-    if (items.length >= 8) break;
+    if (items.length >= 5) break;
     const repoName = ev.repo.name.replace('h10khxn/', '');
     const repoUrl = `https://github.com/${ev.repo.name}`;
 

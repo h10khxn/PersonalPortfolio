@@ -8,6 +8,7 @@ import Footer from '../components/Footer';
 import Experience from '../components/Experience';
 import ProjectsAndDetails from '../components/ProjectsAndDetails';
 import GitHubFeed from '../components/GitHubFeed';
+import BlogTeaser from '../components/BlogTeaser';
 
 export default function Portfolio() {
   return (
@@ -19,6 +20,7 @@ export default function Portfolio() {
       <section id="experience" className="py-0"><Experience /></section>
       <section id="projects" className="py-0"><ProjectsAndDetails /></section>
       <section id="activity" className="py-0"><GitHubFeed /></section>
+      <section id="blog" className="py-0"><BlogTeaser /></section>
       <section id="certifications" className="py-0"><Certifications /></section>
       <section id="contact" className="py-0"><Contact /></section>
       <section id="footer" className="py-0"><Footer /></section>

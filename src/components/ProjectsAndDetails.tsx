@@ -27,11 +27,11 @@ const projects: Project[] = [
   },
   {
     id: 2,
-    title: "Mock Airport System",
-    description: "Developed a robust mock airport management system using Java.",
-    tech: ["Java", "OOP"],
-    image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&q=80&w=800",
-    date: "2023",
+    title: "AI Trading Bot",
+    description: "Built an AI-powered stock advisory system that monitors equities, pulls live news and financial data, and uses Claude AI to recommend buy/sell/hold positions with a confidence score. Implements a triple-check analysis engine across news sentiment, price technicals, and fundamentals — a recommendation only fires when at least 2 of 3 tracks agree. Hardcoded risk rules enforce position limits, stop-losses, and event blackouts. Paper trading runs live through Alpaca Markets with full trade logging in SQLite.",
+    tech: ["Python", "Claude AI", "Alpaca Markets API", "SQLite", "REST APIs"],
+    image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&q=80&w=800",
+    date: "2025",
   },
   {
     id: 3,
@@ -43,11 +43,11 @@ const projects: Project[] = [
   },
   {
     id: 4,
-    title: "Pokémon To-do List",
-    description: "Developed a visually engaging and interactive Pokémon-themed to-do list application.",
-    tech: ["HTML", "CSS", "JavaScript", "UML", "PHP", "MySQL", "React"],
-    image: "https://images.unsplash.com/photo-1542779283-429940ce8336?auto=format&fit=crop&q=80&w=800",
-    date: "2023",
+    title: "SWE Interview Coach",
+    description: "Built a full AI mock interview platform covering LeetCode-style coding, system design, and behavioral rounds for Google, Amazon, Microsoft, and Meta. Ingested 150+ LeetCode problems, system design guides, and STAR behavioral examples into a ChromaDB vector store with metadata-filtered retrieval per company and interview type. Fine-tuned Mistral 7B using LoRA on 300 synthetically generated interviewer Q&A pairs, trained on Google Colab and deployed to HuggingFace Spaces. Each answer is scored 1-10 with specific feedback and a concrete improvement tip. Sessions wrap with a summary of weak areas across all 5 questions.",
+    tech: ["Python", "Mistral 7B", "LoRA", "ChromaDB", "HuggingFace", "Google Colab", "RAG"],
+    image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=800",
+    date: "2025",
   },
   {
     id: 5,
@@ -70,6 +70,17 @@ const projects: Project[] = [
   },
   {
     id: 7,
+    title: "Personal Portfolio",
+    description: "Designed and built this portfolio from scratch — a React + TypeScript SPA with a video hero, aurora mesh visual theme, animated project carousel, blog section, GitHub activity feed, and CI/CD deployment via Netlify. Focused on performance, accessibility, and a polished visual identity.",
+    tech: ["React", "TypeScript", "Vite", "Tailwind CSS", "Framer Motion", "Netlify"],
+    image: "/logo.jpg",
+    date: "2025",
+    links: {
+      live: "https://hamdankhan.dev",
+    }
+  },
+  {
+    id: 8,
     title: "Ai Doctor",
     description: "Built an AI-powered symptom checker that predicts possible diseases based on user-selected symptoms. Trained a fine-tuned DistilBERT model on a symptom-disease dataset for accurate classification. Developed preprocessing, training, and inference pipeline from scratch.",
     tech: ["Python", "PyTorch", "Transformers (HuggingFace)", "Pandas", "scikit-learn", "Flask", "Hugging Face Datasets"],

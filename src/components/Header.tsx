@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-scroll';
+import { Link as RouterLink } from 'react-router-dom';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
-import { Menu, X, Code, Briefcase, Cpu, Award, Mail, Home, Building2, Activity } from 'lucide-react';
+import { Menu, X, Code, Briefcase, Cpu, Award, Mail, Home, Building2, Activity, BookOpen } from 'lucide-react';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,14 +21,15 @@ export default function Header() {
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
-  const navItems = [
+  const navItems: { name: string; icon: React.ElementType; href?: string }[] = [
     { name: 'Home', icon: Home },
     { name: 'Technologies', icon: Code },
     { name: 'Projects', icon: Briefcase },
     { name: 'Skills', icon: Cpu },
     { name: 'Experience', icon: Building2 },
-    { name: 'Activity', icon: Activity },
     { name: 'Certifications', icon: Award },
+    { name: 'Activity', icon: Activity },
+    { name: 'Blog', icon: BookOpen, href: '/blog' },
     { name: 'Contact', icon: Mail },
   ];
 
@@ -92,27 +94,37 @@ export default function Header() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            {navItems.map(({ name, icon: Icon }) => (
+            {navItems.map(({ name, icon: Icon, href }) => (
               <motion.div
                 key={name}
                 whileHover={{ scale: 1.05 }}
                 className="relative group"
               >
-                <Link
-                  to={name.toLowerCase()}
-                  smooth
-                  duration={500}
-                  offset={-70}
-                  className={`text-sm transition-colors duration-200 flex items-center gap-1.5 whitespace-nowrap ${
-                    activeSection === name.toLowerCase()
-                      ? 'text-teal-400'
-                      : 'text-gray-300 hover:text-teal-400'
-                  }`}
-                  onSetActive={() => setActiveSection(name.toLowerCase())}
-                >
-                  <Icon size={14} className="opacity-70 flex-shrink-0" />
-                  {name}
-                </Link>
+                {href ? (
+                  <RouterLink
+                    to={href}
+                    className="text-sm transition-colors duration-200 flex items-center gap-1.5 whitespace-nowrap text-gray-300 hover:text-teal-400"
+                  >
+                    <Icon size={14} className="opacity-70 flex-shrink-0" />
+                    {name}
+                  </RouterLink>
+                ) : (
+                  <Link
+                    to={name.toLowerCase()}
+                    smooth
+                    duration={500}
+                    offset={-70}
+                    className={`text-sm transition-colors duration-200 flex items-center gap-1.5 whitespace-nowrap ${
+                      activeSection === name.toLowerCase()
+                        ? 'text-teal-400'
+                        : 'text-gray-300 hover:text-teal-400'
+                    }`}
+                    onSetActive={() => setActiveSection(name.toLowerCase())}
+                  >
+                    <Icon size={14} className="opacity-70 flex-shrink-0" />
+                    {name}
+                  </Link>
+                )}
                 <div className={`absolute -bottom-0.5 left-0 h-px bg-teal-400 transition-all duration-300 ${
                   activeSection === name.toLowerCase() ? 'w-full' : 'w-0 group-hover:w-full'
                 }`} />
@@ -160,7 +172,7 @@ export default function Header() {
               transition={{ delay: 0.15 }}
               className="pt-20 px-5 h-full overflow-y-auto"
             >
-              {navItems.map(({ name, icon: Icon }, index) => (
+              {navItems.map(({ name, icon: Icon, href }, index) => (
                 <motion.div
                   key={name}
                   initial={{ opacity: 0, x: 40 }}
@@ -168,22 +180,34 @@ export default function Header() {
                   transition={{ delay: index * 0.07 }}
                   className="mb-2"
                 >
-                  <Link
-                    to={name.toLowerCase()}
-                    smooth
-                    duration={500}
-                    offset={-70}
-                    onClick={toggleMenu}
-                    className="block"
-                  >
-                    <motion.div
-                      whileHover={{ x: 8 }}
-                      className="flex items-center gap-3 text-gray-300 hover:text-teal-400 transition-colors duration-200 p-3 rounded-xl hover:bg-gray-800/60"
+                  {href ? (
+                    <RouterLink to={href} onClick={toggleMenu} className="block">
+                      <motion.div
+                        whileHover={{ x: 8 }}
+                        className="flex items-center gap-3 text-gray-300 hover:text-teal-400 transition-colors duration-200 p-3 rounded-xl hover:bg-gray-800/60"
+                      >
+                        <Icon size={18} className="text-teal-400 flex-shrink-0" />
+                        <span className="font-medium text-sm">{name}</span>
+                      </motion.div>
+                    </RouterLink>
+                  ) : (
+                    <Link
+                      to={name.toLowerCase()}
+                      smooth
+                      duration={500}
+                      offset={-70}
+                      onClick={toggleMenu}
+                      className="block"
                     >
-                      <Icon size={18} className="text-teal-400 flex-shrink-0" />
-                      <span className="font-medium text-sm">{name}</span>
-                    </motion.div>
-                  </Link>
+                      <motion.div
+                        whileHover={{ x: 8 }}
+                        className="flex items-center gap-3 text-gray-300 hover:text-teal-400 transition-colors duration-200 p-3 rounded-xl hover:bg-gray-800/60"
+                      >
+                        <Icon size={18} className="text-teal-400 flex-shrink-0" />
+                        <span className="font-medium text-sm">{name}</span>
+                      </motion.div>
+                    </Link>
+                  )}
                 </motion.div>
               ))}
             </motion.div>

@@ -168,65 +168,6 @@ function normalize(raw: RawRecord): Contract | null {
     ],
   },
   {
-    slug: 'engineering-coop-hydro-one',
-    title: 'What Engineering at a Power Utility Actually Looks Like',
-    date: '2025-11-10',
-    tags: ['Co-op', 'Embedded Systems', 'Reflections'],
-    excerpt:
-      'A few months into my co-op at Hydro One, here is what working on protection, control, and automation systems in Ontario\'s power grid has taught me about software in critical infrastructure.',
-    readTime: 5,
-    content: [
-      {
-        type: 'p',
-        text: 'Before starting at Hydro One, my mental model of software engineering was entirely shaped by web and cloud work. APIs, databases, CI pipelines. The idea that software could be directly responsible for keeping the lights on across an entire province was abstract at best. A few months in, it is not abstract anymore.',
-      },
-      {
-        type: 'h2',
-        text: 'The Environment is Different',
-      },
-      {
-        type: 'p',
-        text: 'Consumer software fails gracefully. A crashed web app gets a refresh. In protection and control systems, a failed process can mean an undetected fault, a missed alarm, or in the worst case, an uncontrolled fault clearing event. That possibility changes how you think about every line you write.',
-      },
-      {
-        type: 'p',
-        text: 'The stack reflects this. Embedded devices running deterministic firmware, real-time telemetry pipelines, and centralized SCADA systems all need to agree on state at all times. When they don\'t, the discrepancy has to be caught and diagnosed. Not tolerated.',
-      },
-      {
-        type: 'h2',
-        text: 'Testing is the Job',
-      },
-      {
-        type: 'p',
-        text: 'In most software roles I\'ve seen, testing is something you do after you build. Here, testing is the deliverable. The product of my work is not new features. It\'s confidence that the system behaves correctly under every condition we can simulate.',
-      },
-      {
-        type: 'ul',
-        items: [
-          'End-to-end integration tests verify data flows correctly from field devices to control room dashboards',
-          'Simulated input events check that alarm states propagate and clear correctly',
-          'Regression suites catch regressions introduced by firmware or configuration updates',
-        ],
-      },
-      {
-        type: 'quote',
-        text: 'You do not ship confidence. You test until doubt is no longer reasonable.',
-      },
-      {
-        type: 'h2',
-        text: 'What Transfers Back',
-      },
-      {
-        type: 'p',
-        text: 'Working in this environment has sharpened instincts that apply everywhere. Writing code that fails loudly instead of silently. Tracing failures across layers instead of assuming the problem is in the most obvious place. Treating test coverage as a first-class concern, not an afterthought.',
-      },
-      {
-        type: 'p',
-        text: 'The constraints of critical systems are a useful lens even when you go back to building apps. The question "what happens when this is wrong?" gets a lot more interesting when you\'ve worked in a domain where the answer actually matters.',
-      },
-    ],
-  },
-  {
     slug: 'real-time-telemetry-reliability',
     title: 'Reliability Patterns in Real-Time Telemetry Pipelines',
     date: '2026-01-20',
